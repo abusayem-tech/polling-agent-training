@@ -1,0 +1,220 @@
+"use client";
+
+import { useEffect, useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import { useToast } from "@/hooks/use-toast";
+import { CheckCircle2, Loader2, Video, PlayCircle, ArrowRight, Clock, ShieldCheck, ChevronLeft } from "lucide-react";
+import { useRouter } from "next/navigation";
+import Link from "next/link";
+import { cn } from "@/lib/utils";
+
+const VIDEO_1_PLAY_DURATION = 5;
+const VIDEO_1_ID = "aNdPC_OpAQQ";
+
+export default function Video1Page() {
+  const [userMobile, setUserMobile] = useState<string | null>(null);
+  const [userName, setUserName] = useState<string | null>(null);
+  const [video1Completed, setVideo1Completed] = useState(false);
+  const [playTimer, setPlayTimer] = useState(0);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isReady, setIsReady] = useState(false);
+  const { toast } = useToast();
+  const router = useRouter();
+
+  useEffect(() => {
+    const mobile = localStorage.getItem("userMobile");
+    const name = localStorage.getItem("userName");
+    if (!mobile) {
+      router.push("/register");
+      return;
+    }
+    setUserMobile(mobile);
+    setUserName(name);
+    setVideo1Completed(localStorage.getItem("video1Completed") === "true");
+    setIsReady(true);
+  }, [router]);
+
+  useEffect(() => {
+    if (!isReady || video1Completed) return;
+    const interval = setInterval(() => {
+      setPlayTimer((prev) => {
+        if (prev >= VIDEO_1_PLAY_DURATION) {
+          clearInterval(interval);
+          return VIDEO_1_PLAY_DURATION;
+        }
+        return prev + 1;
+      });
+    }, 1000);
+    return () => clearInterval(interval);
+  }, [isReady, video1Completed]);
+
+  const handleVideo1Complete = async () => {
+    if (isSubmitting || video1Completed) return;
+    setIsSubmitting(true);
+    try {
+      setVideo1Completed(true);
+      localStorage.setItem("video1Completed", "true");
+      toast({ title: "দারুণ!", description: "প্রথম ভিডিও সফলভাবে শেষ হয়েছে। পরবর্তী ভিডিও শুরু করুন।" });
+      
+      // Save to backend (fire and forget for better UX)
+      fetch("/api/complete-video", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ mobile: userMobile, videoNumber: 1 }),
+      });
+
+      router.push("/video-2");
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  if (!isReady || !userMobile) {
+    return (
+      <div className="min-h-screen bg-slate-50 flex items-center justify-center">
+        <Loader2 className="w-10 h-10 text-bangladesh-green animate-spin" />
+      </div>
+    );
+  }
+
+  return (
+    <div className="min-h-screen bg-slate-50 flex flex-col">
+      {/* Top Header */}
+      <header className="bg-white border-b border-slate-200 h-14 md:h-16 flex items-center px-4 sticky top-0 z-50">
+        <div className="container mx-auto flex justify-between items-center gap-2">
+          <Link href="/dashboard" className="flex items-center gap-1 md:gap-2 text-slate-600 hover:text-bangladesh-green transition-colors">
+            <ChevronLeft className="w-4 h-4 md:w-5 md:h-5" />
+            <span className="font-bold text-sm md:text-base hidden sm:inline">ড্যাশবোর্ড</span>
+          </Link>
+          <div className="flex-1 flex justify-center max-w-[120px] md:max-w-[200px]">
+            <div className="flex items-center gap-2 w-full">
+              <div className="h-1.5 md:h-2 flex-1 bg-slate-100 rounded-full overflow-hidden">
+                <div 
+                  className="h-full bg-bangladesh-green transition-all duration-500" 
+                  style={{ width: video1Completed ? "50%" : "25%" }}
+                />
+              </div>
+              <span className="text-[10px] md:text-xs font-bold text-slate-400 whitespace-nowrap">মডিউল ১/২</span>
+            </div>
+          </div>
+          <div className="flex items-center gap-1.5 md:gap-2">
+            <ShieldCheck className="w-3.5 h-3.5 md:w-4 md:h-4 text-bangladesh-green" />
+            <span className="text-[10px] md:text-xs font-bold text-slate-500 uppercase tracking-widest hidden sm:inline">Official Training</span>
+          </div>
+        </div>
+      </header>
+
+      <main className="container mx-auto px-4 py-6 md:py-12 flex-1">
+        <div className="max-w-5xl mx-auto grid lg:grid-cols-3 gap-6 md:gap-8">
+          {/* Main Video Section */}
+          <div className="lg:col-span-2 space-y-4 md:space-y-6">
+            <div className="space-y-1 md:space-y-2 text-center md:text-left">
+              <h1 className="text-xl md:text-3xl font-black text-slate-800 leading-tight">মডিউল ১: পোলিং এজেন্টের মূল দায়িত্ব</h1>
+              <p className="text-sm md:text-base text-slate-500">নির্বাচনী আইনের গুরুত্বপূর্ণ দিকগুলো মনোযোগ দিয়ে শুনুন।</p>
+            </div>
+
+            <Card className="border-none shadow-2xl shadow-slate-200/50 overflow-hidden bg-black aspect-video relative">
+              <iframe
+                width="100%"
+                height="100%"
+                src={`https://www.youtube.com/embed/${VIDEO_1_ID}?autoplay=1&modestbranding=1&rel=0`}
+                title="Training Video 1"
+                frameBorder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+                className="absolute inset-0"
+              ></iframe>
+            </Card>
+
+            <div className="bg-white p-4 md:p-6 rounded-2xl shadow-sm border border-slate-100 flex flex-col sm:flex-row items-center justify-between gap-4 md:gap-6">
+              <div className="flex items-center gap-3 md:gap-4 w-full sm:w-auto">
+                <div className={cn(
+                  "w-10 h-10 md:w-12 md:h-12 rounded-full flex-shrink-0 flex items-center justify-center transition-colors",
+                  video1Completed ? "bg-emerald-50 text-emerald-600" : "bg-slate-50 text-slate-400"
+                )}>
+                  {video1Completed ? <CheckCircle2 className="w-5 h-5 md:w-6 md:h-6" /> : <Clock className="w-5 h-5 md:w-6 md:h-6" />}
+                </div>
+                <div>
+                  <p className="font-bold text-sm md:text-base text-slate-800">অ্যাকশন বাটন</p>
+                  <p className="text-[10px] md:text-xs text-slate-500">ভিডিও শেষ হলে বাটনটি সক্রিয় হবে</p>
+                </div>
+              </div>
+
+              {!video1Completed ? (
+                <Button
+                  onClick={handleVideo1Complete}
+                  disabled={isSubmitting || playTimer < VIDEO_1_PLAY_DURATION}
+                  className="w-full sm:w-auto bg-bangladesh-green hover:bg-bangladesh-green/90 h-11 md:h-12 px-6 rounded-xl font-bold shadow-lg shadow-bangladesh-green/20 text-sm md:text-base"
+                >
+                  {isSubmitting ? (
+                    <Loader2 className="w-4 h-4 md:w-5 md:h-5 animate-spin" />
+                  ) : playTimer < VIDEO_1_PLAY_DURATION ? (
+                    `অপেক্ষা করুন (${VIDEO_1_PLAY_DURATION - playTimer}s)`
+                  ) : (
+                    <>সম্পন্ন করেছি <ArrowRight className="ml-2 w-4 h-4 md:w-5 md:h-5" /></>
+                  )}
+                </Button>
+              ) : (
+                <Link href="/video-2" className="w-full sm:w-auto">
+                  <Button className="w-full bg-bangladesh-green hover:bg-bangladesh-green/90 h-11 md:h-12 px-6 rounded-xl font-bold shadow-lg shadow-bangladesh-green/20 text-sm md:text-base">
+                    পরবর্তী মডিউল <ArrowRight className="ml-2 w-4 h-4 md:w-5 md:h-5" />
+                  </Button>
+                </Link>
+              )}
+            </div>
+          </div>
+
+          {/* Sidebar / Info */}
+          <div className="space-y-6">
+            <Card className="border-none shadow-xl shadow-slate-200/50 p-6 space-y-6 bg-white">
+              <h3 className="font-bold text-slate-800 flex items-center gap-2">
+                <Video className="w-5 h-5 text-bangladesh-green" />
+                প্রশিক্ষণ সূচী
+              </h3>
+              
+              <div className="space-y-3">
+                {[
+                  { id: 1, title: "পোলিং এজেন্টের মূল দায়িত্ব", duration: "১০:৪৫", active: true, done: video1Completed },
+                  { id: 2, title: "নির্বাচনী কার্যক্রম পর্যবেক্ষণ", duration: "১২:২০", active: false, done: false }
+                ].map((item) => (
+                  <div key={item.id} className={cn(
+                    "p-4 rounded-xl flex items-center justify-between border-2 transition-all",
+                    item.active ? "border-bangladesh-green bg-bangladesh-green/5" : "border-slate-50 bg-slate-50 opacity-60"
+                  )}>
+                    <div className="flex items-center gap-3">
+                      <div className={cn(
+                        "w-6 h-6 rounded-md flex items-center justify-center text-xs font-bold",
+                        item.done ? "bg-emerald-500 text-white" : item.active ? "bg-bangladesh-green text-white" : "bg-slate-200 text-slate-500"
+                      )}>
+                        {item.done ? <CheckCircle2 className="w-4 h-4" /> : item.id}
+                      </div>
+                      <span className={cn("text-sm font-bold", item.active ? "text-slate-800" : "text-slate-500")}>{item.title}</span>
+                    </div>
+                    <span className="text-[10px] font-bold text-slate-400">{item.duration}</span>
+                  </div>
+                ))}
+              </div>
+
+              <div className="pt-4 border-t border-slate-100">
+                <p className="text-xs text-slate-500 leading-relaxed italic">
+                  * অনুগ্রহ করে ভিডিওটি সম্পূর্ণ দেখুন। ভিডিও টেনে দেখলে বা বন্ধ করলে প্রগতি সংরক্ষিত হবে না।
+                </p>
+              </div>
+            </Card>
+
+            <div className="bg-emerald-50 p-6 rounded-2xl border border-emerald-100 space-y-2">
+              <h4 className="text-emerald-800 font-bold text-sm">সহায়তা প্রয়োজন?</h4>
+              <p className="text-emerald-600 text-xs">যেকোনো সমস্যায় আমাদের ইমেইল করুন।</p>
+              <a href="mailto:contact@abusayem.me" className="block">
+                <Button variant="link" className="p-0 h-auto text-emerald-700 text-xs font-bold hover:no-underline">contact@abusayem.me</Button>
+              </a>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+  );
+}
+
+
