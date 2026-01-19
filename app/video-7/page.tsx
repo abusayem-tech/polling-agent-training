@@ -4,19 +4,20 @@ import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
-import { CheckCircle2, Loader2, Video, PlayCircle, ArrowRight, Clock, ShieldCheck, ChevronLeft } from "lucide-react";
+import { CheckCircle2, Loader2, Video, PlayCircle, ArrowRight, Clock, ShieldCheck, ChevronLeft, Award } from "lucide-react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
 
-const VIDEO_1_PLAY_DURATION = 5;
-const VIDEO_1_ID = "Nn1jYscT3rs";
+const VIDEO_7_PLAY_DURATION = 5;
+const VIDEO_7_ID = "yeSPlyXmGAw";
 
-export default function Video1Page() {
+export default function Video7Page() {
   const [userMobile, setUserMobile] = useState<string | null>(null);
   const [userName, setUserName] = useState<string | null>(null);
-  const [video1Completed, setVideo1Completed] = useState(false);
+  const [v6Completed, setV6Completed] = useState(false);
+  const [v7Completed, setV7Completed] = useState(false);
   const [playTimer, setPlayTimer] = useState(0);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isReady, setIsReady] = useState(false);
@@ -26,46 +27,55 @@ export default function Video1Page() {
   useEffect(() => {
     const mobile = localStorage.getItem("userMobile");
     const name = localStorage.getItem("userName");
+    const v6 = localStorage.getItem("video6Completed") === "true";
+    
     if (!mobile) {
       router.push("/register");
       return;
     }
+    
+    if (!v6) {
+      router.push("/video-6");
+      return;
+    }
+
     setUserMobile(mobile);
     setUserName(name);
-    setVideo1Completed(localStorage.getItem("video1Completed") === "true");
+    setV6Completed(v6);
+    setV7Completed(localStorage.getItem("video7Completed") === "true");
     setIsReady(true);
   }, [router]);
 
   useEffect(() => {
-    if (!isReady || video1Completed) return;
+    if (!isReady || v7Completed) return;
     const interval = setInterval(() => {
       setPlayTimer((prev) => {
-        if (prev >= VIDEO_1_PLAY_DURATION) {
+        if (prev >= VIDEO_7_PLAY_DURATION) {
           clearInterval(interval);
-          return VIDEO_1_PLAY_DURATION;
+          return VIDEO_7_PLAY_DURATION;
         }
         return prev + 1;
       });
     }, 1000);
     return () => clearInterval(interval);
-  }, [isReady, video1Completed]);
+  }, [isReady, v7Completed]);
 
-  const handleVideo1Complete = async () => {
-    if (isSubmitting || video1Completed) return;
+  const handleVideo7Complete = async () => {
+    if (isSubmitting || v7Completed) return;
     setIsSubmitting(true);
     try {
-      setVideo1Completed(true);
-      localStorage.setItem("video1Completed", "true");
-      toast({ title: "দারুণ!", description: "প্রথম ভিডিও সফলভাবে শেষ হয়েছে। পরবর্তী ভিডিও শুরু করুন।" });
+      setV7Completed(true);
+      localStorage.setItem("video7Completed", "true");
+      toast({ title: "অভিনন্দন!", description: "আপনি সফলভাবে সকল প্রশিক্ষণ ভিডিও সম্পন্ন করেছেন।" });
       
-      // Save to backend (fire and forget for better UX)
+      // Save to backend
       fetch("/api/complete-video", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ mobile: userMobile, videoNumber: 1 }),
+        body: JSON.stringify({ mobile: userMobile, videoNumber: 7 }),
       });
 
-      router.push("/video-2");
+      router.push("/congratulations");
     } finally {
       setIsSubmitting(false);
     }
@@ -93,10 +103,10 @@ export default function Video1Page() {
               <div className="h-1.5 md:h-2 flex-1 bg-slate-100 rounded-full overflow-hidden">
                 <div 
                   className="h-full bg-bangladesh-green transition-all duration-500" 
-                  style={{ width: video1Completed ? "14.28%" : "14.28%" }}
+                  style={{ width: v7Completed ? "100%" : "100%" }}
                 />
               </div>
-              <span className="text-[10px] md:text-xs font-bold text-slate-400 whitespace-nowrap">ভিডিও ১/৭</span>
+              <span className="text-[10px] md:text-xs font-bold text-slate-400 whitespace-nowrap">ভিডিও ৭/৭</span>
             </div>
           </div>
           <div className="flex items-center gap-1.5 md:gap-2">
@@ -107,7 +117,7 @@ export default function Video1Page() {
               height={48} 
               className="w-10 h-10 md:w-12 md:h-12"
             />
-            <span className="text-[10px] md:text-xs font-bold text-slate-500 uppercase tracking-widest hidden sm:inline">Official Training</span>
+            <span className="text-[10px] md:text-xs font-bold text-slate-500 uppercase tracking-widest hidden sm:inline">Final Stage</span>
           </div>
         </div>
       </header>
@@ -117,16 +127,16 @@ export default function Video1Page() {
           {/* Main Video Section */}
           <div className="lg:col-span-2 space-y-4 md:space-y-6">
             <div className="space-y-1 md:space-y-2 text-center md:text-left">
-              <h1 className="text-xl md:text-3xl font-black text-slate-800 leading-tight">ইন্ট্রো: নির্বাচনী ও পোলিং এজেন্ট প্রশিক্ষণ কর্মশালায় স্বাগতম</h1>
-              <p className="text-sm md:text-base text-slate-500">প্রশিক্ষণ কর্মশালার পরিচিতি ও গুরুত্ব সম্পর্কে জানুন।</p>
+              <h1 className="text-xl md:text-3xl font-black text-slate-800 leading-tight">পর্ব ০৬: ভোট পরবর্তী প্যাকেট পরিচিতি</h1>
+              <p className="text-sm md:text-base text-slate-500">ভোট পরবর্তী প্যাকেট সম্পর্কে জানুন।</p>
             </div>
 
             <Card className="border-none shadow-2xl shadow-slate-200/50 overflow-hidden bg-black aspect-video relative">
               <iframe
                 width="100%"
                 height="100%"
-                src={`https://www.youtube.com/embed/${VIDEO_1_ID}?autoplay=1&modestbranding=1&rel=0`}
-                title="Training Video 1"
+                src={`https://www.youtube.com/embed/${VIDEO_7_ID}?autoplay=1&modestbranding=1&rel=0`}
+                title="Training Video 7"
                 frameBorder="0"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                 allowFullScreen
@@ -138,34 +148,35 @@ export default function Video1Page() {
               <div className="flex items-center gap-3 md:gap-4 w-full sm:w-auto">
                 <div className={cn(
                   "w-10 h-10 md:w-12 md:h-12 rounded-full flex-shrink-0 flex items-center justify-center transition-colors",
-                  video1Completed ? "bg-emerald-50 text-emerald-600" : "bg-slate-50 text-slate-400"
+                  v7Completed ? "bg-emerald-50 text-emerald-600" : "bg-slate-50 text-slate-400"
                 )}>
-                  {video1Completed ? <CheckCircle2 className="w-5 h-5 md:w-6 md:h-6" /> : <Clock className="w-5 h-5 md:w-6 md:h-6" />}
+                  {v7Completed ? <CheckCircle2 className="w-6 h-6" /> : <Clock className="w-6 h-6" />}
                 </div>
                 <div>
-                  <p className="font-bold text-sm md:text-base text-slate-800">অ্যাকশন বাটন</p>
-                  <p className="text-[10px] md:text-xs text-slate-500">ভিডিও শেষ হলে বাটনটি সক্রিয় হবে</p>
+                  <p className="font-bold text-sm md:text-base text-slate-800">চূড়ান্ত ধাপ</p>
+                  <p className="text-[10px] md:text-xs text-slate-500">প্রশিক্ষণ সম্পন্ন করে সার্টিফিকেট নিন</p>
                 </div>
               </div>
 
-              {!video1Completed ? (
+              {!v7Completed ? (
                 <Button
-                  onClick={handleVideo1Complete}
-                  disabled={isSubmitting || playTimer < VIDEO_1_PLAY_DURATION}
+                  onClick={handleVideo7Complete}
+                  disabled={isSubmitting || playTimer < VIDEO_7_PLAY_DURATION}
                   className="w-full sm:w-auto bg-bangladesh-green hover:bg-bangladesh-green/90 h-11 md:h-12 px-6 rounded-xl font-bold shadow-lg shadow-bangladesh-green/20 text-sm md:text-base"
                 >
                   {isSubmitting ? (
                     <Loader2 className="w-4 h-4 md:w-5 md:h-5 animate-spin" />
-                  ) : playTimer < VIDEO_1_PLAY_DURATION ? (
-                    `অপেক্ষা করুন (${VIDEO_1_PLAY_DURATION - playTimer}s)`
+                  ) : playTimer < VIDEO_7_PLAY_DURATION ? (
+                    `অপেক্ষা করুন (${VIDEO_7_PLAY_DURATION - playTimer}s)`
                   ) : (
-                    <>সম্পন্ন করেছি <ArrowRight className="ml-2 w-4 h-4 md:w-5 md:h-5" /></>
+                    <>প্রশিক্ষণ সম্পন্ন করুন <ArrowRight className="ml-2 w-4 h-4 md:w-5 md:h-5" /></>
                   )}
                 </Button>
               ) : (
-                <Link href="/video-2" className="w-full sm:w-auto">
+                <Link href="/congratulations" className="w-full sm:w-auto">
                   <Button className="w-full bg-bangladesh-green hover:bg-bangladesh-green/90 h-11 md:h-12 px-6 rounded-xl font-bold shadow-lg shadow-bangladesh-green/20 text-sm md:text-base">
-                    পরবর্তী মডিউল <ArrowRight className="ml-2 w-4 h-4 md:w-5 md:h-5" />
+                    <Award className="mr-2 w-5 h-5 md:w-6 md:h-6" />
+                    সার্টিফিকেট সংগ্রহ করুন
                   </Button>
                 </Link>
               )}
@@ -182,13 +193,13 @@ export default function Video1Page() {
               
               <div className="space-y-3">
                 {[
-                  { id: 1, title: "ইন্ট্রো: নির্বাচনী ও পোলিং এজেন্ট প্রশিক্ষণ কর্মশালায় স্বাগতম", duration: "", active: true, done: video1Completed },
-                  { id: 2, title: "পর্ব ০১: নির্বাচনী ও পোলিং এর নিয়োগের সঠিক পদ্ধতি", duration: "", active: false, done: false },
-                  { id: 3, title: "পর্ব ০২: পোলিং এজেন্ট এর নির্দেশিকা", duration: "", active: false, done: false },
-                  { id: 4, title: "পর্ব ০৩: ভোট চলাকালীন নজরদারি ও অনিয়ম", duration: "", active: false, done: false },
-                  { id: 5, title: "পর্ব ০৪: ভোট গণনা ও ফলাফল সংগ্রহ প্রক্রিয়া", duration: "", active: false, done: false },
-                  { id: 6, title: "পর্ব ০৫: ফলাফল এবং ব্যয়ের হিসাব দাখিল", duration: "", active: false, done: false },
-                  { id: 7, title: "পর্ব ০৬: ভোট পরবর্তী প্যাকেট পরিচিতি", duration: "", active: false, done: false }
+                  { id: 1, title: "ইন্ট্রো: নির্বাচনী ও পোলিং এজেন্ট প্রশিক্ষণ কর্মশালায় স্বাগতম", duration: "", active: false, done: true },
+                  { id: 2, title: "পর্ব ০১: নির্বাচনী ও পোলিং এর নিয়োগের সঠিক পদ্ধতি", duration: "", active: false, done: true },
+                  { id: 3, title: "পর্ব ০২: পোলিং এজেন্ট এর নির্দেশিকা", duration: "", active: false, done: true },
+                  { id: 4, title: "পর্ব ০৩: ভোট চলাকালীন নজরদারি ও অনিয়ম", duration: "", active: false, done: true },
+                  { id: 5, title: "পর্ব ০৪: ভোট গণনা ও ফলাফল সংগ্রহ প্রক্রিয়া", duration: "", active: false, done: true },
+                  { id: 6, title: "পর্ব ০৫: ফলাফল এবং ব্যয়ের হিসাব দাখিল", duration: "", active: false, done: true },
+                  { id: 7, title: "পর্ব ০৬: ভোট পরবর্তী প্যাকেট পরিচিতি", duration: "", active: true, done: v7Completed }
                 ].map((item) => (
                   <div key={item.id} className={cn(
                     "p-4 rounded-xl flex items-center justify-between border-2 transition-all",
@@ -209,17 +220,23 @@ export default function Video1Page() {
               </div>
 
               <div className="pt-4 border-t border-slate-100">
-                <p className="text-xs text-slate-500 leading-relaxed italic">
-                  * অনুগ্রহ করে ভিডিওটি সম্পূর্ণ দেখুন। ভিডিও টেনে দেখলে বা বন্ধ করলে প্রগতি সংরক্ষিত হবে না।
-                </p>
+                <div className="p-4 rounded-xl bg-amber-50 border border-amber-100 flex items-start gap-3">
+                  <Award className="w-5 h-5 text-amber-600 flex-shrink-0 mt-0.5" />
+                  <p className="text-xs text-amber-800 leading-relaxed font-medium">
+                    এই মডিউলটি শেষ করলে আপনার সার্টিফিকেট অটোমেটিক্যালি জেনারেট হয়ে যাবে।
+                  </p>
+                </div>
               </div>
             </Card>
 
+            <div className="bg-emerald-50 p-6 rounded-2xl border border-emerald-100 space-y-2 text-center">
+              <ShieldCheck className="w-10 h-10 text-bangladesh-green mx-auto" />
+              <h4 className="text-emerald-800 font-bold text-sm">সুরক্ষিত প্ল্যাটফর্ম</h4>
+              <p className="text-emerald-600 text-[10px]">আপনার সকল তথ্য নির্বাচন কমিশন প্রোটোকল অনুযায়ী সুরক্ষিত রাখা হয়েছে।</p>
+            </div>
           </div>
         </div>
       </main>
     </div>
   );
 }
-
-

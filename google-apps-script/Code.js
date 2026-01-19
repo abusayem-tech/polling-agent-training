@@ -22,12 +22,24 @@ const CONFIG = {
     'Name', 
     'NID',
     'Address',
-    'Polling Center',
+    'Constituency', // নির্বাচনী আসন
     'Video 1 Completed',
     'Video 2 Completed',
+    'Video 3 Completed',
+    'Video 4 Completed',
+    'Video 5 Completed',
+    'Video 6 Completed',
+    'Video 7 Completed',
     'Registration Time',
     'Video 1 Completed Time',
-    'Video 2 Completed Time'
+    'Video 2 Completed Time',
+    'Video 3 Completed Time',
+    'Video 4 Completed Time',
+    'Video 5 Completed Time',
+    'Video 6 Completed Time',
+    'Video 7 Completed Time',
+    'Certificate ID',
+    'Certificate Generated Time'
   ]
 };
 
@@ -49,6 +61,9 @@ function doPost(e) {
       
       case 'completeVideo':
         return completeVideo(data.mobile, data.videoNumber);
+      
+      case 'updateCertificate':
+        return updateCertificate(data.mobile, data.certificateId);
       
       default:
         return createResponse(false, 'Invalid action');
@@ -187,12 +202,24 @@ function checkUser(mobile) {
           name: data[i][1],
           nid: data[i][2],
           address: data[i][3],
-          pollingCenter: data[i][4],
+          constituency: data[i][4], // নির্বাচনী আসন (previously pollingCenter)
           video1Completed: data[i][5] === 'TRUE' || data[i][5] === true,
           video2Completed: data[i][6] === 'TRUE' || data[i][6] === true,
-          registrationTime: data[i][7],
-          video1CompletedTime: data[i][8],
-          video2CompletedTime: data[i][9]
+          video3Completed: data[i][7] === 'TRUE' || data[i][7] === true,
+          video4Completed: data[i][8] === 'TRUE' || data[i][8] === true,
+          video5Completed: data[i][9] === 'TRUE' || data[i][9] === true,
+          video6Completed: data[i][10] === 'TRUE' || data[i][10] === true,
+          video7Completed: data[i][11] === 'TRUE' || data[i][11] === true,
+          registrationTime: data[i][12],
+          video1CompletedTime: data[i][13],
+          video2CompletedTime: data[i][14],
+          video3CompletedTime: data[i][15],
+          video4CompletedTime: data[i][16],
+          video5CompletedTime: data[i][17],
+          video6CompletedTime: data[i][18],
+          video7CompletedTime: data[i][19],
+          certificateId: data[i][20] || '',
+          certificateGeneratedTime: data[i][21] || ''
         };
         
         Logger.log('Returning success response with user data');
@@ -244,17 +271,31 @@ function registerUser(userData) {
     
     // Prepare row data
     const timestamp = new Date().toISOString();
+    // Support both 'constituency' and 'pollingCenter' field names for backward compatibility
+    const constituencyValue = userData.constituency || userData.pollingCenter || '';
     const rowData = [
       userData.mobile,
       userData.name || '',
       userData.nid || '',
       userData.address || '',
-      userData.pollingCenter || '',
-      'FALSE',
-      'FALSE',
-      timestamp,
-      '',
-      ''
+      constituencyValue, // নির্বাচনী আসন
+      'FALSE', // Video 1
+      'FALSE', // Video 2
+      'FALSE', // Video 3
+      'FALSE', // Video 4
+      'FALSE', // Video 5
+      'FALSE', // Video 6
+      'FALSE', // Video 7
+      timestamp, // Registration Time
+      '', // Video 1 Completed Time
+      '', // Video 2 Completed Time
+      '', // Video 3 Completed Time
+      '', // Video 4 Completed Time
+      '', // Video 5 Completed Time
+      '', // Video 6 Completed Time
+      '', // Video 7 Completed Time
+      '', // Certificate ID
+      ''  // Certificate Generated Time
     ];
     
     // Append the new row
@@ -273,6 +314,7 @@ function registerUser(userData) {
 
 /**
  * Mark video as completed
+ * Supports videos 1-7
  */
 function completeVideo(mobile, videoNumber) {
   try {
@@ -299,21 +341,22 @@ function completeVideo(mobile, videoNumber) {
       return createResponse(false, 'User not found');
     }
     
+    // Validate video number
+    if (videoNumber < 1 || videoNumber > 7) {
+      return createResponse(false, 'Invalid video number. Must be between 1 and 7');
+    }
+    
     const timestamp = new Date().toISOString();
     
-    if (videoNumber === 1) {
-      // Update Video 1 completion (column F = 6)
-      sheet.getRange(rowIndex, 6).setValue('TRUE');
-      // Update Video 1 completion time (column I = 9)
-      sheet.getRange(rowIndex, 9).setValue(timestamp);
-    } else if (videoNumber === 2) {
-      // Update Video 2 completion (column G = 7)
-      sheet.getRange(rowIndex, 7).setValue('TRUE');
-      // Update Video 2 completion time (column J = 10)
-      sheet.getRange(rowIndex, 10).setValue(timestamp);
-    } else {
-      return createResponse(false, 'Invalid video number');
-    }
+    // Video completion columns: 6-12 (Videos 1-7)
+    // Video completion time columns: 14-20 (Videos 1-7)
+    const videoCompletionColumn = 5 + videoNumber; // 6-12
+    const videoCompletionTimeColumn = 13 + videoNumber; // 14-20
+    
+    // Update Video completion status
+    sheet.getRange(rowIndex, videoCompletionColumn).setValue('TRUE');
+    // Update Video completion time
+    sheet.getRange(rowIndex, videoCompletionTimeColumn).setValue(timestamp);
     
     return createResponse(true, `Video ${videoNumber} marked as completed`, {
       mobile: mobile,
@@ -324,6 +367,53 @@ function completeVideo(mobile, videoNumber) {
   } catch (error) {
     Logger.log('Error in completeVideo: ' + error.toString());
     return createResponse(false, 'Error completing video: ' + error.toString());
+  }
+}
+
+/**
+ * Update certificate ID and generation time
+ */
+function updateCertificate(mobile, certificateId) {
+  try {
+    const sheet = getSheet();
+    const data = sheet.getDataRange().getValues();
+    
+    // Normalize the input mobile number (get last 10 digits)
+    const normalizedInput = normalizeMobile(mobile);
+    
+    // Find user row
+    let rowIndex = -1;
+    for (let i = 1; i < data.length; i++) {
+      // Normalize the stored mobile number (get last 10 digits)
+      const normalizedStored = normalizeMobile(data[i][0]);
+      
+      // Compare last 10 digits
+      if (normalizedStored === normalizedInput) {
+        rowIndex = i + 1; // +1 because sheet rows are 1-indexed
+        break;
+      }
+    }
+    
+    if (rowIndex === -1) {
+      return createResponse(false, 'User not found');
+    }
+    
+    const timestamp = new Date().toISOString();
+    
+    // Certificate ID column: 21
+    // Certificate Generated Time column: 22
+    sheet.getRange(rowIndex, 21).setValue(certificateId || '');
+    sheet.getRange(rowIndex, 22).setValue(timestamp);
+    
+    return createResponse(true, 'Certificate ID updated', {
+      mobile: mobile,
+      certificateId: certificateId,
+      certificateGeneratedTime: timestamp
+    });
+    
+  } catch (error) {
+    Logger.log('Error in updateCertificate: ' + error.toString());
+    return createResponse(false, 'Error updating certificate: ' + error.toString());
   }
 }
 
@@ -392,7 +482,7 @@ function testSetup() {
       name: 'Test User',
       nid: '1234567890',
       address: 'Test Address',
-      pollingCenter: 'Test Center'
+      constituency: 'Test Constituency'
     };
     
     const result = registerUser(testUser);

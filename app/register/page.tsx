@@ -9,6 +9,7 @@ import { useToast } from "@/hooks/use-toast";
 import { Loader2, Phone, User, MapPin, Building, ShieldCheck, CreditCard, ArrowRight, ArrowLeft } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { isValidBangladeshiMobile, cn } from "@/lib/utils";
+import Image from "next/image";
 
 export default function RegisterPage() {
   const [step, setStep] = useState<"mobile" | "details">("mobile");
@@ -48,8 +49,13 @@ export default function RegisterPage() {
       if (data.exists) {
         localStorage.setItem("userMobile", trimmedMobile);
         if (data.user.name) localStorage.setItem("userName", data.user.name);
-        localStorage.setItem("video1Completed", String(data.user.video1Completed));
-        localStorage.setItem("video2Completed", String(data.user.video2Completed));
+        localStorage.setItem("video1Completed", String(data.user.video1Completed || false));
+        localStorage.setItem("video2Completed", String(data.user.video2Completed || false));
+        localStorage.setItem("video3Completed", String(data.user.video3Completed || false));
+        localStorage.setItem("video4Completed", String(data.user.video4Completed || false));
+        localStorage.setItem("video5Completed", String(data.user.video5Completed || false));
+        localStorage.setItem("video6Completed", String(data.user.video6Completed || false));
+        localStorage.setItem("video7Completed", String(data.user.video7Completed || false));
         
         toast({
           title: "স্বাগতম!",
@@ -94,6 +100,11 @@ export default function RegisterPage() {
         localStorage.setItem("userName", formData.name);
         localStorage.setItem("video1Completed", "false");
         localStorage.setItem("video2Completed", "false");
+        localStorage.setItem("video3Completed", "false");
+        localStorage.setItem("video4Completed", "false");
+        localStorage.setItem("video5Completed", "false");
+        localStorage.setItem("video6Completed", "false");
+        localStorage.setItem("video7Completed", "false");
         
         toast({ title: "সফল!", description: "নিবন্ধন সম্পন্ন হয়েছে। প্রশিক্ষণ শুরু করা যাক!" });
         router.push("/video-1");
@@ -196,7 +207,7 @@ export default function RegisterPage() {
                   </div>
 
                   <div className="space-y-2">
-                    <Label htmlFor="nid" className="text-slate-700 font-bold">জাতীয় পরিচয়পত্র নম্বর (NID) *</Label>
+                    <Label htmlFor="nid" className="text-slate-700 font-bold">জাতীয় পরিচয়পত্র নাম্বার *</Label>
                     <div className="relative">
                       <CreditCard className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-slate-400" />
                       <Input
@@ -211,12 +222,12 @@ export default function RegisterPage() {
                   </div>
 
                   <div className="space-y-2">
-                    <Label htmlFor="pollingCenter" className="text-slate-700 font-bold">পোলিং সেন্টার *</Label>
+                    <Label htmlFor="pollingCenter" className="text-slate-700 font-bold">নির্বাচনী আসন *</Label>
                     <div className="relative">
                       <Building className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-slate-400" />
                       <Input
                         id="pollingCenter"
-                        placeholder="পোলিং সেন্টারের নাম লিখুন"
+                        placeholder="নির্বাচনী আসন লিখুন"
                         value={formData.pollingCenter}
                         onChange={(e) => setFormData({ ...formData, pollingCenter: e.target.value })}
                         className="pl-12 h-12 border-slate-200 rounded-xl"

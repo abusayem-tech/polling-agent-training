@@ -5,7 +5,7 @@ export async function POST(request: NextRequest) {
   try {
     const { mobile, videoNumber } = await request.json();
 
-    if (!mobile || !videoNumber || (videoNumber !== 1 && videoNumber !== 2)) {
+    if (!mobile || !videoNumber || videoNumber < 1 || videoNumber > 7) {
       return NextResponse.json(
         { error: "Invalid request" },
         { status: 400 }

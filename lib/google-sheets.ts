@@ -10,12 +10,25 @@ export interface UserData {
   name?: string;
   nid?: string;
   address?: string;
-  pollingCenter?: string;
+  constituency?: string;
+  pollingCenter?: string; // For backward compatibility
   video1Completed?: boolean;
   video2Completed?: boolean;
+  video3Completed?: boolean;
+  video4Completed?: boolean;
+  video5Completed?: boolean;
+  video6Completed?: boolean;
+  video7Completed?: boolean;
   registrationTime?: string;
   video1CompletedTime?: string;
   video2CompletedTime?: string;
+  video3CompletedTime?: string;
+  video4CompletedTime?: string;
+  video5CompletedTime?: string;
+  video6CompletedTime?: string;
+  video7CompletedTime?: string;
+  certificateId?: string;
+  certificateGeneratedTime?: string;
 }
 
 interface ApiResponse {
@@ -113,7 +126,7 @@ export async function registerUser(userData: UserData): Promise<void> {
  */
 export async function updateVideoCompletion(
   mobile: string,
-  videoNumber: 1 | 2
+  videoNumber: 1 | 2 | 3 | 4 | 5 | 6 | 7
 ): Promise<void> {
   try {
     // Mobile number is normalized in Google Apps Script for comparison
@@ -127,6 +140,30 @@ export async function updateVideoCompletion(
     }
   } catch (error) {
     console.error('Error updating video completion:', error);
+    throw error;
+  }
+}
+
+/**
+ * Update certificate ID
+ * Normalizes mobile number before sending to ensure proper matching
+ */
+export async function updateCertificateId(
+  mobile: string,
+  certificateId: string
+): Promise<void> {
+  try {
+    // Mobile number is normalized in Google Apps Script for comparison
+    const response = await makeRequest('updateCertificate', {
+      mobile,
+      certificateId,
+    });
+    
+    if (!response.success) {
+      throw new Error(response.message || 'Failed to update certificate ID');
+    }
+  } catch (error) {
+    console.error('Error updating certificate ID:', error);
     throw error;
   }
 }

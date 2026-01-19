@@ -8,9 +8,10 @@ import { CheckCircle2, Loader2, Video, PlayCircle, ArrowRight, Clock, ShieldChec
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
+import Image from "next/image";
 
 const VIDEO_2_PLAY_DURATION = 5;
-const VIDEO_2_ID = "salY_Sm6mv4";
+const VIDEO_2_ID = "WeCtW5fmM0g";
 
 export default function Video2Page() {
   const [userMobile, setUserMobile] = useState<string | null>(null);
@@ -74,7 +75,7 @@ export default function Video2Page() {
         body: JSON.stringify({ mobile: userMobile, videoNumber: 2 }),
       });
 
-      router.push("/congratulations");
+      router.push("/video-3");
     } finally {
       setIsSubmitting(false);
     }
@@ -102,15 +103,21 @@ export default function Video2Page() {
               <div className="h-1.5 md:h-2 flex-1 bg-slate-100 rounded-full overflow-hidden">
                 <div 
                   className="h-full bg-bangladesh-green transition-all duration-500" 
-                  style={{ width: v2Completed ? "100%" : "75%" }}
+                  style={{ width: v2Completed ? "28.56%" : "28.56%" }}
                 />
               </div>
-              <span className="text-[10px] md:text-xs font-bold text-slate-400 whitespace-nowrap">মডিউল ২/২</span>
+              <span className="text-[10px] md:text-xs font-bold text-slate-400 whitespace-nowrap">ভিডিও ২/৭</span>
             </div>
           </div>
           <div className="flex items-center gap-1.5 md:gap-2">
-            <ShieldCheck className="w-3.5 h-3.5 md:w-4 md:h-4 text-bangladesh-green" />
-            <span className="text-[10px] md:text-xs font-bold text-slate-500 uppercase tracking-widest hidden sm:inline">Final Stage</span>
+            <Image 
+              src="/logo.svg" 
+              alt="Logo" 
+              width={48} 
+              height={48} 
+              className="w-10 h-10 md:w-12 md:h-12"
+            />
+            <span className="text-[10px] md:text-xs font-bold text-slate-500 uppercase tracking-widest hidden sm:inline">Training</span>
           </div>
         </div>
       </header>
@@ -120,8 +127,8 @@ export default function Video2Page() {
           {/* Main Video Section */}
           <div className="lg:col-span-2 space-y-4 md:space-y-6">
             <div className="space-y-1 md:space-y-2 text-center md:text-left">
-              <h1 className="text-xl md:text-3xl font-black text-slate-800 leading-tight">মডিউল ২: কার্যক্রম পর্যবেক্ষণ ও রিপোর্টিং</h1>
-              <p className="text-sm md:text-base text-slate-500">নির্বাচনী কার্যক্রম কীভাবে সঠিকভাবে পর্যবেক্ষণ ও রিপোর্ট করবেন তা জানুন।</p>
+              <h1 className="text-xl md:text-3xl font-black text-slate-800 leading-tight">পর্ব ০১: নির্বাচনী ও পোলিং এর নিয়োগের সঠিক পদ্ধতি</h1>
+              <p className="text-sm md:text-base text-slate-500">নির্বাচনী ও পোলিং এজেন্ট নিয়োগের সঠিক পদ্ধতি সম্পর্কে জানুন।</p>
             </div>
 
             <Card className="border-none shadow-2xl shadow-slate-200/50 overflow-hidden bg-black aspect-video relative">
@@ -166,10 +173,9 @@ export default function Video2Page() {
                   )}
                 </Button>
               ) : (
-                <Link href="/congratulations" className="w-full sm:w-auto">
+                <Link href="/video-3" className="w-full sm:w-auto">
                   <Button className="w-full bg-bangladesh-green hover:bg-bangladesh-green/90 h-11 md:h-12 px-6 rounded-xl font-bold shadow-lg shadow-bangladesh-green/20 text-sm md:text-base">
-                    <Award className="mr-2 w-5 h-5 md:w-6 md:h-6" />
-                    সার্টিফিকেট সংগ্রহ করুন
+                    পরবর্তী ভিডিও <ArrowRight className="ml-2 w-4 h-4 md:w-5 md:h-5" />
                   </Button>
                 </Link>
               )}
@@ -186,8 +192,13 @@ export default function Video2Page() {
               
               <div className="space-y-3">
                 {[
-                  { id: 1, title: "পোলিং এজেন্টের মূল দায়িত্ব", duration: "১০:৪৫", active: false, done: true },
-                  { id: 2, title: "কার্যক্রম পর্যবেক্ষণ ও রিপোর্টিং", duration: "১২:২০", active: true, done: v2Completed }
+                  { id: 1, title: "ইন্ট্রো: নির্বাচনী ও পোলিং এজেন্ট প্রশিক্ষণ কর্মশালায় স্বাগতম", duration: "", active: false, done: true },
+                  { id: 2, title: "পর্ব ০১: নির্বাচনী ও পোলিং এর নিয়োগের সঠিক পদ্ধতি", duration: "", active: true, done: v2Completed },
+                  { id: 3, title: "পর্ব ০২: পোলিং এজেন্ট এর নির্দেশিকা", duration: "", active: false, done: false },
+                  { id: 4, title: "পর্ব ০৩: ভোট চলাকালীন নজরদারি ও অনিয়ম", duration: "", active: false, done: false },
+                  { id: 5, title: "পর্ব ০৪: ভোট গণনা ও ফলাফল সংগ্রহ প্রক্রিয়া", duration: "", active: false, done: false },
+                  { id: 6, title: "পর্ব ০৫: ফলাফল এবং ব্যয়ের হিসাব দাখিল", duration: "", active: false, done: false },
+                  { id: 7, title: "পর্ব ০৬: ভোট পরবর্তী প্যাকেট পরিচিতি", duration: "", active: false, done: false }
                 ].map((item) => (
                   <div key={item.id} className={cn(
                     "p-4 rounded-xl flex items-center justify-between border-2 transition-all",
@@ -216,14 +227,6 @@ export default function Video2Page() {
                 </div>
               </div>
             </Card>
-
-            <div className="bg-emerald-50 p-6 rounded-2xl border border-emerald-100 space-y-2">
-              <h4 className="text-emerald-800 font-bold text-sm">সহায়তা প্রয়োজন?</h4>
-              <p className="text-emerald-600 text-xs">যেকোনো সমস্যায় আমাদের ইমেইল করুন।</p>
-              <a href="mailto:contact@abusayem.me" className="block">
-                <Button variant="link" className="p-0 h-auto text-emerald-700 text-xs font-bold hover:no-underline">contact@abusayem.me</Button>
-              </a>
-            </div>
 
             <div className="bg-emerald-50 p-6 rounded-2xl border border-emerald-100 space-y-2 text-center">
               <ShieldCheck className="w-10 h-10 text-bangladesh-green mx-auto" />

@@ -8,15 +8,26 @@ import { CheckCircle2, Video, Download, PlayCircle, LogOut, LayoutDashboard, Clo
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
+import Image from "next/image";
 
-const VIDEO_1_ID = "aNdPC_OpAQQ";
-const VIDEO_2_ID = "salY_Sm6mv4";
+const VIDEO_1_ID = "Nn1jYscT3rs";
+const VIDEO_2_ID = "WeCtW5fmM0g";
+const VIDEO_3_ID = "1OsGrB96y70";
+const VIDEO_4_ID = "QLGzbf1xnDk";
+const VIDEO_5_ID = "6GaL-uDymAA";
+const VIDEO_6_ID = "1_KCPBvbbGk";
+const VIDEO_7_ID = "yeSPlyXmGAw";
 
 export default function DashboardPage() {
   const [userMobile, setUserMobile] = useState<string | null>(null);
   const [userName, setUserName] = useState<string | null>(null);
   const [v1Completed, setV1Completed] = useState(false);
   const [v2Completed, setV2Completed] = useState(false);
+  const [v3Completed, setV3Completed] = useState(false);
+  const [v4Completed, setV4Completed] = useState(false);
+  const [v5Completed, setV5Completed] = useState(false);
+  const [v6Completed, setV6Completed] = useState(false);
+  const [v7Completed, setV7Completed] = useState(false);
   const [isReady, setIsReady] = useState(false);
   const { toast } = useToast();
   const router = useRouter();
@@ -32,6 +43,11 @@ export default function DashboardPage() {
     setUserName(name);
     setV1Completed(localStorage.getItem("video1Completed") === "true");
     setV2Completed(localStorage.getItem("video2Completed") === "true");
+    setV3Completed(localStorage.getItem("video3Completed") === "true");
+    setV4Completed(localStorage.getItem("video4Completed") === "true");
+    setV5Completed(localStorage.getItem("video5Completed") === "true");
+    setV6Completed(localStorage.getItem("video6Completed") === "true");
+    setV7Completed(localStorage.getItem("video7Completed") === "true");
     setIsReady(true);
   }, [router]);
 
@@ -40,7 +56,11 @@ export default function DashboardPage() {
     router.push("/");
   };
 
-  const progressValue = (v1Completed ? 50 : 0) + (v2Completed ? 50 : 0);
+  const progressValue = Math.round(
+    ((v1Completed ? 1 : 0) + (v2Completed ? 1 : 0) + (v3Completed ? 1 : 0) + 
+     (v4Completed ? 1 : 0) + (v5Completed ? 1 : 0) + (v6Completed ? 1 : 0) + 
+     (v7Completed ? 1 : 0)) * 100 / 7
+  );
 
   if (!isReady || !userMobile) return null;
 
@@ -50,8 +70,14 @@ export default function DashboardPage() {
       <nav className="bg-white border-b border-slate-200 sticky top-0 z-50 shadow-sm">
         <div className="container mx-auto px-4 h-20 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="bg-bangladesh-green p-2 rounded-xl">
-              <LayoutDashboard className="w-6 h-6 text-white" />
+            <div className="p-1 rounded-xl bg-white">
+              <Image 
+                src="/logo.svg" 
+                alt="Logo" 
+                width={48} 
+                height={48} 
+                className="w-10 h-10 md:w-12 md:h-12"
+              />
             </div>
             <h1 className="text-xl font-bold text-slate-800 hidden md:block">প্রশিক্ষণ ড্যাশবোর্ড</h1>
           </div>
@@ -76,6 +102,13 @@ export default function DashboardPage() {
       <main className="container mx-auto px-4 py-8 md:py-12 space-y-10 flex-1">
         <div className="max-w-6xl mx-auto space-y-10">
           
+          {/* Course Title */}
+          <div className="bg-white rounded-2xl shadow-lg border border-slate-100 p-6 text-center">
+            <h2 className="text-lg md:text-xl font-bold text-slate-800">
+              কোর্স নাম: ত্রয়োদশ জাতীয় সংসদ নির্বাচন উপলক্ষ্যে নির্বাচনী ও পোলিং এজেন্টদের প্রশিক্ষণ কর্মশালা
+            </h2>
+          </div>
+          
           {/* Progress Section */}
           <div className="bg-white rounded-3xl shadow-xl shadow-slate-200/50 border border-slate-100 overflow-hidden">
             <div className="p-6 md:p-10 flex flex-col md:flex-row gap-6 md:gap-8 items-center text-center md:text-left">
@@ -98,7 +131,7 @@ export default function DashboardPage() {
                   <p className="text-slate-500 text-base md:text-lg">
                     {progressValue === 100 
                       ? "আপনার সার্টিফিকেটটি এখন সংগ্রহের জন্য প্রস্তুত।" 
-                      : "সার্টিফিকেট পেতে দুটি ভিডিও সম্পূর্ণ দেখা প্রয়োজন।"}
+                      : "সার্টিফিকেট পেতে সকল ভিডিও সম্পূর্ণ দেখা প্রয়োজন।"}
                   </p>
                 </div>
                 
@@ -111,13 +144,15 @@ export default function DashboardPage() {
                       </Button>
                     </Link>
                   ) : (
-                    <div className="flex justify-center md:justify-end gap-2 md:gap-3">
-                      <div className={cn("px-3 md:px-4 py-1.5 md:py-2 rounded-full text-xs md:text-sm font-bold flex items-center gap-1.5 md:gap-2", v1Completed ? "bg-emerald-50 text-emerald-600 border border-emerald-100" : "bg-slate-100 text-slate-400 border border-slate-200")}>
-                        <CheckCircle2 className="w-3.5 h-3.5 md:w-4 md:h-4" /> ভিডিও ১
-                      </div>
-                      <div className={cn("px-3 md:px-4 py-1.5 md:py-2 rounded-full text-xs md:text-sm font-bold flex items-center gap-1.5 md:gap-2", v2Completed ? "bg-emerald-50 text-emerald-600 border border-emerald-100" : "bg-slate-100 text-slate-400 border border-slate-200")}>
-                        <CheckCircle2 className="w-3.5 h-3.5 md:w-4 md:h-4" /> ভিডিও ২
-                      </div>
+                    <div className="flex flex-wrap justify-center md:justify-end gap-2 md:gap-3">
+                      {[1, 2, 3, 4, 5, 6, 7].map((num) => {
+                        const completed = [v1Completed, v2Completed, v3Completed, v4Completed, v5Completed, v6Completed, v7Completed][num - 1];
+                        return (
+                          <div key={num} className={cn("px-2 md:px-3 py-1 md:py-1.5 rounded-full text-[10px] md:text-xs font-bold flex items-center gap-1", completed ? "bg-emerald-50 text-emerald-600 border border-emerald-100" : "bg-slate-100 text-slate-400 border border-slate-200")}>
+                            <CheckCircle2 className="w-3 h-3 md:w-3.5 md:h-3.5" /> {num}
+                          </div>
+                        );
+                      })}
                     </div>
                   )}
                 </div>
@@ -126,13 +161,13 @@ export default function DashboardPage() {
           </div>
 
           {/* Videos Grid */}
-          <div className="grid md:grid-cols-2 gap-6 md:gap-8">
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
             {[
               {
                 id: 1,
                 videoId: VIDEO_1_ID,
-                title: "প্রশিক্ষণ ভিডিও ১",
-                desc: "পোলিং এজেন্টের মূল দায়িত্ব ও কর্তব্য",
+                title: "ইন্ট্রো: নির্বাচনী ও পোলিং এজেন্ট প্রশিক্ষণ কর্মশালায় স্বাগতম",
+                desc: "প্রশিক্ষণ কর্মশালার পরিচিতি ও গুরুত্ব",
                 completed: v1Completed,
                 unlocked: true,
                 href: "/video-1"
@@ -140,11 +175,56 @@ export default function DashboardPage() {
               {
                 id: 2,
                 videoId: VIDEO_2_ID,
-                title: "প্রশিক্ষণ ভিডিও ২",
-                desc: "নির্বাচনী কার্যক্রম পর্যবেক্ষণ ও রিপোর্টিং",
+                title: "পর্ব ০১: নির্বাচনী ও পোলিং এর নিয়োগের সঠিক পদ্ধতি",
+                desc: "নির্বাচনী ও পোলিং এজেন্ট নিয়োগের সঠিক পদ্ধতি",
                 completed: v2Completed,
                 unlocked: v1Completed,
                 href: "/video-2"
+              },
+              {
+                id: 3,
+                videoId: VIDEO_3_ID,
+                title: "পর্ব ০২: পোলিং এজেন্ট এর নির্দেশিকা",
+                desc: "পোলিং এজেন্ট হিসেবে আপনার নির্দেশিকা ও দায়িত্ব",
+                completed: v3Completed,
+                unlocked: v2Completed,
+                href: "/video-3"
+              },
+              {
+                id: 4,
+                videoId: VIDEO_4_ID,
+                title: "পর্ব ০৩: ভোট চলাকালীন নজরদারি ও অনিয়ম",
+                desc: "ভোট গ্রহণের সময় নজরদারি ও অনিয়ম",
+                completed: v4Completed,
+                unlocked: v3Completed,
+                href: "/video-4"
+              },
+              {
+                id: 5,
+                videoId: VIDEO_5_ID,
+                title: "পর্ব ০৪: ভোট গণনা ও ফলাফল সংগ্রহ প্রক্রিয়া",
+                desc: "ভোট গণনা ও ফলাফল সংগ্রহ প্রক্রিয়া",
+                completed: v5Completed,
+                unlocked: v4Completed,
+                href: "/video-5"
+              },
+              {
+                id: 6,
+                videoId: VIDEO_6_ID,
+                title: "পর্ব ০৫: ফলাফল এবং ব্যয়ের হিসাব দাখিল",
+                desc: "ফলাফল এবং ব্যয়ের হিসাব দাখিল প্রক্রিয়া",
+                completed: v6Completed,
+                unlocked: v5Completed,
+                href: "/video-6"
+              },
+              {
+                id: 7,
+                videoId: VIDEO_7_ID,
+                title: "পর্ব ০৬: ভোট পরবর্তী প্যাকেট পরিচিতি",
+                desc: "ভোট পরবর্তী প্যাকেট সম্পর্কে জানুন",
+                completed: v7Completed,
+                unlocked: v6Completed,
+                href: "/video-7"
               }
             ].map((v) => (
               <Card key={v.id} className={cn(
@@ -166,13 +246,13 @@ export default function DashboardPage() {
                   )}
                   
                   {v.completed && (
-                    <div className="absolute top-3 right-3 md:top-4 md:right-4 bg-emerald-500 text-white px-2.5 py-1 rounded-full text-[10px] md:text-xs font-black flex items-center gap-1.5 shadow-xl">
+                    <div className="absolute top-3 right-3 md:top-4 md:right-4 bg-emerald-500 text-white px-2.5 py-1 rounded-full text-[10px] md:text-xs font-black flex items-center gap-1.5 shadow-xl z-10">
                       <CheckCircle2 className="w-3 md:w-3.5 h-3 md:h-3.5" />
                       সম্পন্ন
                     </div>
                   )}
 
-                  {v.unlocked && !v.completed && (
+                  {v.unlocked && (
                     <Link href={v.href} className="absolute inset-0 flex items-center justify-center bg-black/40 group-hover:bg-black/20 transition-colors">
                       <div className="w-14 h-14 md:w-16 md:h-16 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center group-hover:scale-110 transition-transform border border-white/30 shadow-2xl">
                         <PlayCircle className="w-8 h-8 md:w-10 md:h-10 text-white" />
@@ -187,10 +267,15 @@ export default function DashboardPage() {
                       <h3 className="text-lg md:text-xl font-bold text-slate-800 leading-tight">{v.title}</h3>
                       <p className="text-slate-500 text-xs md:text-sm line-clamp-2">{v.desc}</p>
                     </div>
-                    {v.unlocked && !v.completed && (
+                    {v.unlocked && (
                       <Link href={v.href}>
-                        <Button variant="outline" size="sm" className="border-emerald-200 text-emerald-600 hover:bg-emerald-50 rounded-xl px-4 py-1.5 h-auto text-xs font-bold">
-                          শুরু করুন
+                        <Button variant="outline" size="sm" className={cn(
+                          "rounded-xl px-4 py-1.5 h-auto text-xs font-bold",
+                          v.completed 
+                            ? "border-slate-200 text-slate-600 hover:bg-slate-50" 
+                            : "border-emerald-200 text-emerald-600 hover:bg-emerald-50"
+                        )}>
+                          {v.completed ? "আবার দেখুন" : "শুরু করুন"}
                         </Button>
                       </Link>
                     )}
@@ -200,23 +285,6 @@ export default function DashboardPage() {
             ))}
           </div>
 
-          {/* Help Section */}
-          <div className="bg-emerald-900 rounded-3xl p-8 md:p-12 text-white relative overflow-hidden">
-            <div className="absolute inset-0 opacity-10 bg-[url('https://www.transparenttextures.com/patterns/graphy.png')]"></div>
-            <div className="relative z-10 flex flex-col md:flex-row justify-between items-center gap-8">
-              <div className="space-y-2 text-center md:text-left">
-                <h3 className="text-2xl font-bold">যেকোনো প্রয়োজনে সহায়তা নিন</h3>
-                <p className="text-emerald-100/70">আমাদের সাপোর্ট টিম আপনার সহায়তায় সবসময় পাশে আছে।</p>
-              </div>
-              <div className="flex gap-4">
-                <a href="mailto:contact@abusayem.me">
-                  <Button variant="outline" className="border-white/20 bg-white/10 hover:bg-white/20 text-white h-12 px-6 rounded-xl">
-                    contact@abusayem.me
-                  </Button>
-                </a>
-              </div>
-            </div>
-          </div>
 
         </div>
       </main>

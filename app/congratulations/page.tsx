@@ -8,6 +8,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useToast } from "@/hooks/use-toast";
 import confetti from "canvas-confetti";
+import Image from "next/image";
 
 export default function CongratulationsPage() {
   const [userMobile, setUserMobile] = useState<string | null>(null);
@@ -74,7 +75,19 @@ export default function CongratulationsPage() {
         hashValue |= 0;
       }
       const hash = Math.abs(hashValue).toString(36).toUpperCase().padStart(6, '0');
-      setCertId(`PA-${hash}`);
+      const certIdValue = `PA-${hash}`;
+      setCertId(certIdValue);
+      
+      // Save certificate ID to backend
+      if (certIdValue) {
+        fetch("/api/update-certificate", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ mobile: userMobile, certificateId: certIdValue }),
+        }).catch(error => {
+          console.error("Error updating certificate ID:", error);
+        });
+      }
     }
   }, [userMobile, userName]);
 
