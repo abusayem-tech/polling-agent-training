@@ -121,7 +121,7 @@ export default function CongratulationsPage() {
     if (userName) {
       generateCertificate(false);
     }
-  }, [userName]);
+  }, [userName, certId]);
 
   const generateCertificate = async (forDownload: boolean) => {
     if (!userName) return;
@@ -155,12 +155,22 @@ export default function CongratulationsPage() {
 
       // Configure text style
       ctx.font = "120px 'Galada', cursive"; 
-      ctx.fillStyle = "#1e40af"; // Dark blue color for the name
+      ctx.fillStyle = "#006A4E"; // Bangladesh green color for the name
       ctx.textAlign = "center";
       ctx.textBaseline = "middle";
 
       // Draw the name in the middle
-      ctx.fillText(userName, img.width / 2, img.height / 2 + 80);
+      ctx.fillText(userName, img.width / 2, img.height / 2 + 10);
+
+      // Draw certificate ID in bottom left corner
+      if (certId) {
+        ctx.font = "16px Arial, sans-serif";
+        ctx.fillStyle = "#666666"; // Gray color for the ID
+        ctx.textAlign = "left";
+        ctx.textBaseline = "bottom";
+        const padding = 20;
+        ctx.fillText(`Certificate ID: ${certId}`, padding, img.height - padding);
+      }
 
       const dataUrl = canvas.toDataURL('image/png');
       
