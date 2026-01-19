@@ -35,7 +35,7 @@ export default function WelcomePage() {
               className="w-8 h-8 md:w-14 md:h-14"
             />
           </div>
-          <h1 className="text-2xl md:text-5xl font-bold text-white tracking-tight leading-tight px-4">
+          <h1 className="text-xl sm:text-2xl md:text-5xl font-bold text-white tracking-tight leading-tight px-2 sm:px-4">
             <span className="block">ত্রয়োদশ জাতীয় সংসদ নির্বাচন উপলক্ষ্যে</span>
             <span className="block">নির্বাচনী ও পোলিং এজেন্ট প্রশিক্ষণ</span>
           </h1>
@@ -51,7 +51,7 @@ export default function WelcomePage() {
       </div>
 
       {/* Main Content */}
-      <div className="container mx-auto px-4 -mt-12 md:-mt-16 pb-20 relative z-20">
+      <div className="container mx-auto px-4 pt-8 md:pt-12 pb-20">
         <div className="max-w-5xl mx-auto space-y-12">
           {/* Stats/Features Grid */}
           <div className="grid md:grid-cols-3 gap-6">
@@ -76,12 +76,12 @@ export default function WelcomePage() {
               }
             ].map((feature, i) => (
               <Card key={i} className="border-none shadow-xl hover:shadow-2xl transition-all hover:-translate-y-1">
-                <CardContent className="p-8 flex flex-col items-center text-center space-y-4">
-                  <div className={`p-4 rounded-2xl ${feature.color}`}>
-                    <feature.icon className="w-8 h-8" />
+                <CardContent className="p-6 sm:p-8 flex flex-col items-center text-center space-y-3 sm:space-y-4">
+                  <div className={`p-3 sm:p-4 rounded-2xl ${feature.color}`}>
+                    <feature.icon className="w-6 h-6 sm:w-8 sm:h-8" />
                   </div>
-                  <h3 className="text-xl font-bold text-slate-800">{feature.title}</h3>
-                  <p className="text-slate-500">{feature.desc}</p>
+                  <h3 className="text-lg sm:text-xl font-bold text-slate-800">{feature.title}</h3>
+                  <p className="text-sm sm:text-base text-slate-500">{feature.desc}</p>
                 </CardContent>
               </Card>
             ))}
@@ -90,12 +90,12 @@ export default function WelcomePage() {
           {/* Detailed Info Section */}
           <div className="bg-white rounded-3xl shadow-xl overflow-hidden border border-slate-100">
             <div className="grid md:grid-cols-2">
-              <div className="p-6 md:p-12 space-y-6 md:space-y-8">
-                <div className="space-y-3 md:space-y-4 text-center md:text-left">
-                  <h2 className="text-2xl md:text-3xl font-bold text-slate-800">আপনি যা যা শিখবেন</h2>
+              <div className="p-6 sm:p-8 md:p-12 space-y-4 sm:space-y-6 md:space-y-8">
+                <div className="space-y-2 sm:space-y-3 md:space-y-4 text-center md:text-left">
+                  <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-slate-800">আপনি যা যা শিখবেন</h2>
                 </div>
 
-                <div className="space-y-3 md:space-y-4">
+                <div className="space-y-2 sm:space-y-3 md:space-y-4">
                   {[
                     "এজেন্ট হিসেবে নিয়োগ পাওয়ার সঠিক পদ্ধতি",
                     "পোলিং এজেন্টের দায়িত্ব ও কর্তব্য",
@@ -105,27 +105,27 @@ export default function WelcomePage() {
                     "যেকোনো অনিয়মে তাৎক্ষণিক করণীয়",
                     "ভোট পরবর্তী দায়িত্ব ও কর্তব্য"
                   ].map((item, i) => (
-                    <div key={i} className="flex items-center gap-3 md:gap-4 p-3 md:p-4 rounded-xl bg-slate-50 hover:bg-slate-100 transition-colors">
-                      <CheckCircle2 className="w-5 h-5 md:w-6 md:h-6 text-bangladesh-green flex-shrink-0" />
-                      <span className="font-medium text-sm md:text-base text-slate-700">{item}</span>
+                    <div key={i} className="flex items-start gap-2 sm:gap-3 md:gap-4 p-2.5 sm:p-3 md:p-4 rounded-xl bg-slate-50 hover:bg-slate-100 transition-colors">
+                      <CheckCircle2 className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 text-bangladesh-green flex-shrink-0 mt-0.5" />
+                      <span className="font-medium text-xs sm:text-sm md:text-base text-slate-700 leading-relaxed">{item}</span>
                     </div>
                   ))}
                 </div>
               </div>
 
-              <div className="bg-slate-900 p-8 md:p-12 flex flex-col justify-center text-white relative overflow-hidden">
+              <div className="bg-slate-900 p-6 sm:p-8 md:p-12 flex flex-col justify-center text-white relative overflow-hidden">
                 <div className="absolute inset-0 opacity-20 bg-[url('https://www.transparenttextures.com/patterns/graphy.png')]"></div>
-                <div className="relative z-10 space-y-4 md:space-y-6 text-center md:text-left flex flex-col items-center md:items-start">
-                  <div className="inline-flex items-center gap-2 px-4 py-1 rounded-full bg-bangladesh-red/20 text-bangladesh-red border border-bangladesh-red/30 text-sm font-bold animate-pulse">
-                    <Play className="w-4 h-4 fill-current" />
+                <div className="relative z-10 space-y-3 sm:space-y-4 md:space-y-6 text-center md:text-left flex flex-col items-center md:items-start">
+                  <div className="inline-flex items-center gap-2 px-3 sm:px-4 py-1 rounded-full bg-bangladesh-red/20 text-bangladesh-red border border-bangladesh-red/30 text-xs sm:text-sm font-bold animate-pulse">
+                    <Play className="w-3 h-3 sm:w-4 sm:h-4 fill-current" />
                     এখনই দেখুন
                   </div>
-                  <h3 className="text-2xl md:text-3xl font-bold">প্রশিক্ষণ শুরু করতে প্রস্তুত?</h3>
-                  <p className="text-slate-400 text-base md:text-lg">
+                  <h3 className="text-xl sm:text-2xl md:text-3xl font-bold">প্রশিক্ষণ শুরু করতে প্রস্তুত?</h3>
+                  <p className="text-slate-400 text-sm sm:text-base md:text-lg leading-relaxed">
                     আপনার যাত্রা শুরু করতে নিচের বাটনে ক্লিক করুন। আমরা আপনাকে ধাপে ধাপে পূর্ণ প্রশিক্ষণ প্রদান করব।
                   </p>
                   <Link href="/register" className="w-full pt-2 md:pt-4">
-                    <Button size="lg" className="w-full bg-bangladesh-red hover:bg-bangladesh-red/90 text-white h-12 md:h-14 rounded-xl font-bold text-lg">
+                    <Button size="lg" className="w-full bg-bangladesh-red hover:bg-bangladesh-red/90 text-white h-11 sm:h-12 md:h-14 rounded-xl font-bold text-base sm:text-lg">
                       রেজিস্ট্রেশন করুন
                     </Button>
                   </Link>

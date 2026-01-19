@@ -112,13 +112,13 @@ export default function Video1Page() {
         </div>
       </header>
 
-      <main className="container mx-auto px-4 py-6 md:py-12 flex-1">
-        <div className="max-w-5xl mx-auto grid lg:grid-cols-3 gap-6 md:gap-8">
+      <main className="container mx-auto px-3 sm:px-4 py-4 sm:py-6 md:py-12 flex-1">
+        <div className="max-w-5xl mx-auto grid lg:grid-cols-3 gap-4 sm:gap-6 md:gap-8">
           {/* Main Video Section */}
-          <div className="lg:col-span-2 space-y-4 md:space-y-6">
-            <div className="space-y-1 md:space-y-2 text-center md:text-left">
-              <h1 className="text-xl md:text-3xl font-black text-slate-800 leading-tight">ইন্ট্রো: নির্বাচনী ও পোলিং এজেন্ট প্রশিক্ষণ কর্মশালায় স্বাগতম</h1>
-              <p className="text-sm md:text-base text-slate-500">প্রশিক্ষণ কর্মশালার পরিচিতি ও গুরুত্ব সম্পর্কে জানুন।</p>
+          <div className="lg:col-span-2 space-y-3 sm:space-y-4 md:space-y-6">
+            <div className="space-y-1 sm:space-y-2 text-center md:text-left">
+              <h1 className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-black text-slate-800 leading-tight">ইন্ট্রো: নির্বাচনী ও পোলিং এজেন্ট প্রশিক্ষণ কর্মশালায় স্বাগতম</h1>
+              <p className="text-xs sm:text-sm md:text-base text-slate-500">প্রশিক্ষণ কর্মশালার পরিচিতি ও গুরুত্ব সম্পর্কে জানুন।</p>
             </div>
 
             <Card className="border-none shadow-2xl shadow-slate-200/50 overflow-hidden bg-black aspect-video relative">
@@ -134,17 +134,17 @@ export default function Video1Page() {
               ></iframe>
             </Card>
 
-            <div className="bg-white p-4 md:p-6 rounded-2xl shadow-sm border border-slate-100 flex flex-col sm:flex-row items-center justify-between gap-4 md:gap-6">
-              <div className="flex items-center gap-3 md:gap-4 w-full sm:w-auto">
+            <div className="bg-white p-3 sm:p-4 md:p-6 rounded-xl sm:rounded-2xl shadow-sm border border-slate-100 flex flex-col sm:flex-row items-center justify-between gap-3 sm:gap-4 md:gap-6">
+              <div className="flex items-center gap-2 sm:gap-3 md:gap-4 w-full sm:w-auto">
                 <div className={cn(
-                  "w-10 h-10 md:w-12 md:h-12 rounded-full flex-shrink-0 flex items-center justify-center transition-colors",
+                  "w-9 h-9 sm:w-10 sm:h-10 md:w-12 md:h-12 rounded-full flex-shrink-0 flex items-center justify-center transition-colors",
                   video1Completed ? "bg-emerald-50 text-emerald-600" : "bg-slate-50 text-slate-400"
                 )}>
-                  {video1Completed ? <CheckCircle2 className="w-5 h-5 md:w-6 md:h-6" /> : <Clock className="w-5 h-5 md:w-6 md:h-6" />}
+                  {video1Completed ? <CheckCircle2 className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6" /> : <Clock className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6" />}
                 </div>
-                <div>
-                  <p className="font-bold text-sm md:text-base text-slate-800">অ্যাকশন বাটন</p>
-                  <p className="text-[10px] md:text-xs text-slate-500">ভিডিও শেষ হলে বাটনটি সক্রিয় হবে</p>
+                <div className="min-w-0 flex-1">
+                  <p className="font-bold text-xs sm:text-sm md:text-base text-slate-800">অ্যাকশন বাটন</p>
+                  <p className="text-[9px] sm:text-[10px] md:text-xs text-slate-500">ভিডিও শেষ হলে বাটনটি সক্রিয় হবে</p>
                 </div>
               </div>
 
@@ -173,14 +173,14 @@ export default function Video1Page() {
           </div>
 
           {/* Sidebar / Info */}
-          <div className="space-y-6">
-            <Card className="border-none shadow-xl shadow-slate-200/50 p-6 space-y-6 bg-white">
-              <h3 className="font-bold text-slate-800 flex items-center gap-2">
-                <Video className="w-5 h-5 text-bangladesh-green" />
+          <div className="space-y-4 sm:space-y-6">
+            <Card className="border-none shadow-xl shadow-slate-200/50 p-4 sm:p-6 space-y-4 sm:space-y-6 bg-white">
+              <h3 className="font-bold text-sm sm:text-base text-slate-800 flex items-center gap-2">
+                <Video className="w-4 h-4 sm:w-5 sm:h-5 text-bangladesh-green" />
                 প্রশিক্ষণ সূচী
               </h3>
               
-              <div className="space-y-3">
+              <div className="space-y-2 sm:space-y-3">
                 {[
                   { id: 1, title: "ইন্ট্রো: নির্বাচনী ও পোলিং এজেন্ট প্রশিক্ষণ কর্মশালায় স্বাগতম", duration: "", active: true, done: video1Completed },
                   { id: 2, title: "পর্ব ০১: নির্বাচনী ও পোলিং এর নিয়োগের সঠিক পদ্ধতি", duration: "", active: false, done: false },
@@ -191,19 +191,19 @@ export default function Video1Page() {
                   { id: 7, title: "পর্ব ০৬: ভোট পরবর্তী প্যাকেট পরিচিতি", duration: "", active: false, done: false }
                 ].map((item) => (
                   <div key={item.id} className={cn(
-                    "p-4 rounded-xl flex items-center justify-between border-2 transition-all",
+                    "p-2.5 sm:p-3 md:p-4 rounded-lg sm:rounded-xl flex items-start gap-2 sm:gap-3 border-2 transition-all",
                     item.active ? "border-bangladesh-green bg-bangladesh-green/5" : "border-slate-50 bg-slate-50 opacity-60"
                   )}>
-                    <div className="flex items-center gap-3">
+                    <div className="flex items-start gap-2 sm:gap-3 flex-1 min-w-0">
                       <div className={cn(
-                        "w-6 h-6 rounded-md flex items-center justify-center text-xs font-bold",
+                        "w-5 h-5 sm:w-6 sm:h-6 rounded-md flex items-center justify-center text-[10px] sm:text-xs font-bold flex-shrink-0",
                         item.done ? "bg-emerald-500 text-white" : item.active ? "bg-bangladesh-green text-white" : "bg-slate-200 text-slate-500"
                       )}>
-                        {item.done ? <CheckCircle2 className="w-4 h-4" /> : item.id}
+                        {item.done ? <CheckCircle2 className="w-3 h-3 sm:w-4 sm:h-4" /> : item.id}
                       </div>
-                      <span className={cn("text-sm font-bold", item.active ? "text-slate-800" : "text-slate-500")}>{item.title}</span>
+                      <span className={cn("text-xs sm:text-sm font-bold leading-tight", item.active ? "text-slate-800" : "text-slate-500")}>{item.title}</span>
                     </div>
-                    <span className="text-[10px] font-bold text-slate-400">{item.duration}</span>
+                    {item.duration && <span className="text-[9px] sm:text-[10px] font-bold text-slate-400 flex-shrink-0">{item.duration}</span>}
                   </div>
                 ))}
               </div>

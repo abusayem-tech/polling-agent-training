@@ -145,31 +145,31 @@ export default function RegisterPage() {
         </div>
 
         <Card className="border-none shadow-2xl overflow-hidden bg-white">
-          <div className="bg-bangladesh-green h-24 relative flex items-center justify-center">
+          <div className="bg-bangladesh-green h-20 sm:h-24 relative flex items-center justify-center">
             <div className="absolute inset-0 opacity-10 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')]"></div>
-            <h1 className="text-2xl font-bold text-white relative z-10">প্রশিক্ষণার্থী নিবন্ধন</h1>
+            <h1 className="text-xl sm:text-2xl font-bold text-white relative z-10 px-4 text-center">প্রশিক্ষণার্থী নিবন্ধন</h1>
           </div>
 
-          <CardContent className="p-6 md:p-10">
+          <CardContent className="p-4 sm:p-6 md:p-10">
             {step === "mobile" ? (
-              <form onSubmit={handleMobileCheck} className="space-y-6">
-                <div className="space-y-4">
-                  <div className="text-center space-y-2 mb-6">
-                    <h2 className="text-xl font-bold text-slate-800">আপনার মোবাইল নম্বর দিন</h2>
-                    <p className="text-slate-500">আমরা আপনার অ্যাকাউন্টের স্থিতি যাচাই করব</p>
+              <form onSubmit={handleMobileCheck} className="space-y-4 sm:space-y-6">
+                <div className="space-y-3 sm:space-y-4">
+                  <div className="text-center space-y-1 sm:space-y-2 mb-4 sm:mb-6">
+                    <h2 className="text-lg sm:text-xl font-bold text-slate-800">আপনার মোবাইল নম্বর দিন</h2>
+                    <p className="text-sm sm:text-base text-slate-500">আমরা আপনার অ্যাকাউন্টের স্থিতি যাচাই করব</p>
                   </div>
                   
                   <div className="space-y-2">
-                    <Label htmlFor="mobile" className="text-slate-700 font-bold">মোবাইল নম্বর</Label>
+                    <Label htmlFor="mobile" className="text-sm sm:text-base text-slate-700 font-bold">মোবাইল নম্বর</Label>
                     <div className="relative">
-                      <Phone className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-slate-400" />
+                      <Phone className="absolute left-3 sm:left-4 top-1/2 -translate-y-1/2 h-4 w-4 sm:h-5 sm:w-5 text-slate-400" />
                       <Input
                         id="mobile"
                         type="tel"
                         placeholder="01XXXXXXXXX"
                         value={mobile}
                         onChange={(e) => setMobile(e.target.value)}
-                        className="pl-12 h-14 text-lg border-slate-200 focus:border-bangladesh-green focus:ring-bangladesh-green/20 rounded-xl"
+                        className="pl-10 sm:pl-12 h-12 sm:h-14 text-base sm:text-lg border-slate-200 focus:border-bangladesh-green focus:ring-bangladesh-green/20 rounded-lg sm:rounded-xl"
                         maxLength={11}
                         required
                       />
@@ -177,7 +177,7 @@ export default function RegisterPage() {
                   </div>
                 </div>
 
-                <Button type="submit" className="w-full bg-bangladesh-green hover:bg-bangladesh-green/90 h-14 text-lg font-bold rounded-xl shadow-lg shadow-bangladesh-green/20" disabled={loading}>
+                <Button type="submit" className="w-full bg-bangladesh-green hover:bg-bangladesh-green/90 h-12 sm:h-14 text-base sm:text-lg font-bold rounded-lg sm:rounded-xl shadow-lg shadow-bangladesh-green/20" disabled={loading}>
                   {loading ? (
                     <Loader2 className="mr-2 h-5 w-5 animate-spin" />
                   ) : (
@@ -189,75 +189,75 @@ export default function RegisterPage() {
                 </Button>
               </form>
             ) : (
-              <form onSubmit={handleFullRegistration} className="space-y-6">
-                <div className="grid gap-6">
+              <form onSubmit={handleFullRegistration} className="space-y-4 sm:space-y-6">
+                <div className="grid gap-4 sm:gap-6">
                   <div className="space-y-2">
-                    <Label htmlFor="name" className="text-slate-700 font-bold">সম্পূর্ণ নাম *</Label>
+                    <Label htmlFor="name" className="text-sm sm:text-base text-slate-700 font-bold">সম্পূর্ণ নাম *</Label>
                     <div className="relative">
-                      <User className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-slate-400" />
+                      <User className="absolute left-3 sm:left-4 top-1/2 -translate-y-1/2 h-4 w-4 sm:h-5 sm:w-5 text-slate-400" />
                       <Input
                         id="name"
                         placeholder="আপনার নাম লিখুন"
                         value={formData.name}
                         onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                        className="pl-12 h-12 border-slate-200 rounded-xl"
+                        className="pl-10 sm:pl-12 h-11 sm:h-12 border-slate-200 rounded-lg sm:rounded-xl text-sm sm:text-base"
                         required
                       />
                     </div>
                   </div>
 
                   <div className="space-y-2">
-                    <Label htmlFor="nid" className="text-slate-700 font-bold">জাতীয় পরিচয়পত্র নাম্বার *</Label>
+                    <Label htmlFor="nid" className="text-sm sm:text-base text-slate-700 font-bold">জাতীয় পরিচয়পত্র নাম্বার *</Label>
                     <div className="relative">
-                      <CreditCard className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-slate-400" />
+                      <CreditCard className="absolute left-3 sm:left-4 top-1/2 -translate-y-1/2 h-4 w-4 sm:h-5 sm:w-5 text-slate-400" />
                       <Input
                         id="nid"
                         placeholder="NID নম্বর লিখুন"
                         value={formData.nid}
                         onChange={(e) => setFormData({ ...formData, nid: e.target.value })}
-                        className="pl-12 h-12 border-slate-200 rounded-xl"
+                        className="pl-10 sm:pl-12 h-11 sm:h-12 border-slate-200 rounded-lg sm:rounded-xl text-sm sm:text-base"
                         required
                       />
                     </div>
                   </div>
 
                   <div className="space-y-2">
-                    <Label htmlFor="pollingCenter" className="text-slate-700 font-bold">নির্বাচনী আসন *</Label>
+                    <Label htmlFor="pollingCenter" className="text-sm sm:text-base text-slate-700 font-bold">নির্বাচনী আসন *</Label>
                     <div className="relative">
-                      <Building className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-slate-400" />
+                      <Building className="absolute left-3 sm:left-4 top-1/2 -translate-y-1/2 h-4 w-4 sm:h-5 sm:w-5 text-slate-400" />
                       <Input
                         id="pollingCenter"
                         placeholder="নির্বাচনী আসন লিখুন"
                         value={formData.pollingCenter}
                         onChange={(e) => setFormData({ ...formData, pollingCenter: e.target.value })}
-                        className="pl-12 h-12 border-slate-200 rounded-xl"
+                        className="pl-10 sm:pl-12 h-11 sm:h-12 border-slate-200 rounded-lg sm:rounded-xl text-sm sm:text-base"
                         required
                       />
                     </div>
                   </div>
 
                   <div className="space-y-2">
-                    <Label htmlFor="address" className="text-slate-700 font-bold">ঠিকানা *</Label>
+                    <Label htmlFor="address" className="text-sm sm:text-base text-slate-700 font-bold">ঠিকানা *</Label>
                     <div className="relative">
-                      <MapPin className="absolute left-4 top-3 h-5 w-5 text-slate-400" />
+                      <MapPin className="absolute left-3 sm:left-4 top-3 h-4 w-4 sm:h-5 sm:w-5 text-slate-400" />
                       <textarea
                         id="address"
                         placeholder="আপনার ঠিকানা লিখুন"
                         value={formData.address}
                         onChange={(e) => setFormData({ ...formData, address: e.target.value })}
-                        className="w-full min-h-[100px] pl-12 p-3 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-bangladesh-green/20 focus:border-bangladesh-green transition-all"
+                        className="w-full min-h-[90px] sm:min-h-[100px] pl-10 sm:pl-12 p-3 text-sm sm:text-base border border-slate-200 rounded-lg sm:rounded-xl focus:outline-none focus:ring-2 focus:ring-bangladesh-green/20 focus:border-bangladesh-green transition-all"
                         required
                       />
                     </div>
                   </div>
                 </div>
 
-                <div className="flex gap-4 pt-4">
+                <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 pt-2 sm:pt-4">
                   <Button
                     type="button"
                     variant="ghost"
                     onClick={() => setStep("mobile")}
-                    className="flex-1 h-14 font-bold text-slate-500 hover:bg-slate-100"
+                    className="flex-1 h-11 sm:h-14 font-bold text-sm sm:text-base text-slate-500 hover:bg-slate-100 rounded-lg sm:rounded-xl"
                     disabled={loading}
                   >
                     <ArrowLeft className="mr-2 h-5 w-5" />
@@ -265,7 +265,7 @@ export default function RegisterPage() {
                   </Button>
                   <Button
                     type="submit"
-                    className="flex-[2] bg-bangladesh-green hover:bg-bangladesh-green/90 h-14 text-lg font-bold rounded-xl shadow-lg"
+                    className="flex-[2] bg-bangladesh-green hover:bg-bangladesh-green/90 h-11 sm:h-14 text-sm sm:text-base md:text-lg font-bold rounded-lg sm:rounded-xl shadow-lg"
                     disabled={loading}
                   >
                     {loading ? (

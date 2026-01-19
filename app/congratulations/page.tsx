@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Award, CheckCircle2, Download, Home, Loader2, Share2, Calendar, ShieldCheck, ArrowRight } from "lucide-react";
+import { Award, CheckCircle2, Download, Home, Loader2, Calendar, ShieldCheck, ArrowRight, Share2 } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useToast } from "@/hooks/use-toast";
@@ -245,9 +245,9 @@ export default function CongratulationsPage() {
               </div>
 
               {/* Certificate & Stats Grid */}
-              <div className="grid lg:grid-cols-2 gap-6 md:gap-8 items-center">
+              <div className="grid lg:grid-cols-2 gap-4 sm:gap-6 md:gap-8 items-center">
                 {/* Certificate Preview */}
-                <div className="space-y-4">
+                <div className="space-y-3 sm:space-y-4">
                   <div className="relative group max-w-[400px] mx-auto lg:max-w-none">
                     <div className="absolute -inset-1 bg-gradient-to-r from-bangladesh-green to-emerald-600 rounded-lg blur opacity-25 group-hover:opacity-50 transition duration-1000 group-hover:duration-200"></div>
                     <div className="relative aspect-[1.414/1] bg-slate-100 rounded-lg overflow-hidden border-2 border-white shadow-xl">
@@ -259,86 +259,56 @@ export default function CongratulationsPage() {
                         />
                       ) : (
                         <div className="absolute inset-0 flex flex-col items-center justify-center text-slate-400 gap-2">
-                          <Loader2 className="w-8 h-8 animate-spin" />
-                          <p className="text-xs">সার্টিফিকেট তৈরি হচ্ছে...</p>
+                          <Loader2 className="w-6 h-6 sm:w-8 sm:h-8 animate-spin" />
+                          <p className="text-xs sm:text-sm">সার্টিফিকেট তৈরি হচ্ছে...</p>
                         </div>
                       )}
                     </div>
                   </div>
                   
-                  <div className="flex flex-col sm:flex-row gap-3">
-                    <Button
-                      className="flex-1 bg-bangladesh-green hover:bg-bangladesh-green/90 text-white shadow-lg shadow-bangladesh-green/20 h-12 rounded-xl font-bold"
-                      size="lg"
-                      onClick={downloadCertificate}
-                      disabled={isFetchingName || !certificatePreview}
-                    >
-                      <Download className="mr-2 h-5 w-5" />
-                      ডাউনলোড করুন
-                    </Button>
-                    <Button
-                      variant="outline"
-                      className="flex-1 border-slate-200 hover:bg-slate-50 h-12 rounded-xl font-bold text-slate-600"
-                      size="lg"
-                      onClick={shareOnWhatsApp}
-                    >
-                      <Share2 className="mr-2 h-5 w-5 text-bangladesh-green" />
-                      শেয়ার করুন
-                    </Button>
-                  </div>
+                  <Button
+                    className="w-full bg-bangladesh-green hover:bg-bangladesh-green/90 text-white shadow-lg shadow-bangladesh-green/20 h-11 sm:h-12 rounded-lg sm:rounded-xl font-bold text-sm sm:text-base"
+                    size="lg"
+                    onClick={downloadCertificate}
+                    disabled={isFetchingName || !certificatePreview}
+                  >
+                    <Download className="mr-2 h-4 w-4 sm:h-5 sm:w-5" />
+                    ডাউনলোড করুন
+                  </Button>
                 </div>
 
                 {/* Status & Details */}
-                <div className="space-y-4 md:space-y-6">
-                  <div className="grid sm:grid-cols-2 lg:grid-cols-1 gap-3 md:gap-4">
-                    <div className="flex items-center gap-3 md:gap-4 p-3 md:p-4 rounded-xl bg-slate-50 border border-slate-100">
-                      <div className="h-9 w-9 md:h-10 md:w-10 rounded-full bg-bangladesh-green/10 flex items-center justify-center flex-shrink-0">
-                        <ShieldCheck className="w-5 h-5 md:w-6 md:h-6 text-bangladesh-green" />
+                <div className="space-y-3 sm:space-y-4 md:space-y-6">
+                  <div className="grid sm:grid-cols-2 lg:grid-cols-1 gap-2 sm:gap-3 md:gap-4">
+                    <div className="flex items-center gap-2 sm:gap-3 md:gap-4 p-2.5 sm:p-3 md:p-4 rounded-lg sm:rounded-xl bg-slate-50 border border-slate-100">
+                      <div className="h-8 w-8 sm:h-9 sm:w-9 md:h-10 md:w-10 rounded-full bg-bangladesh-green/10 flex items-center justify-center flex-shrink-0">
+                        <ShieldCheck className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 text-bangladesh-green" />
+                      </div>
+                      <div className="min-w-0 flex-1">
+                        <p className="text-[9px] sm:text-[10px] text-slate-500 font-medium uppercase tracking-wider">সার্টিফিকেট আইডি</p>
+                        <p className="font-mono font-bold text-slate-700 text-xs sm:text-sm md:text-base truncate">{certId || "---"}</p>
+                      </div>
+                    </div>
+
+                    <div className="flex items-center gap-2 sm:gap-3 md:gap-4 p-2.5 sm:p-3 md:p-4 rounded-lg sm:rounded-xl bg-slate-50 border border-slate-100">
+                      <div className="h-8 w-8 sm:h-9 sm:w-9 md:h-10 md:w-10 rounded-full bg-bangladesh-green/10 flex items-center justify-center flex-shrink-0">
+                        <Calendar className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 text-bangladesh-green" />
                       </div>
                       <div className="min-w-0">
-                        <p className="text-[10px] text-slate-500 font-medium uppercase tracking-wider">সার্টিফিকেট আইডি</p>
-                        <p className="font-mono font-bold text-slate-700 text-sm md:text-base truncate">{certId || "---"}</p>
+                        <p className="text-[9px] sm:text-[10px] text-slate-500 font-medium uppercase tracking-wider">ইস্যু তারিখ</p>
+                        <p className="font-bold text-slate-700 text-xs sm:text-sm md:text-base">{completionDate}</p>
                       </div>
                     </div>
-
-                    <div className="flex items-center gap-3 md:gap-4 p-3 md:p-4 rounded-xl bg-slate-50 border border-slate-100">
-                      <div className="h-9 w-9 md:h-10 md:w-10 rounded-full bg-bangladesh-green/10 flex items-center justify-center flex-shrink-0">
-                        <Calendar className="w-5 h-5 md:w-6 md:h-6 text-bangladesh-green" />
-                      </div>
-                      <div>
-                        <p className="text-[10px] text-slate-500 font-medium uppercase tracking-wider">ইস্যু তারিখ</p>
-                        <p className="font-bold text-slate-700 text-sm md:text-base">{completionDate}</p>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="p-5 md:p-6 rounded-xl bg-emerald-50 border border-emerald-100 space-y-3 md:space-y-4">
-                    <h3 className="font-bold text-emerald-900 flex items-center gap-2 text-sm md:text-base">
-                      <CheckCircle2 className="w-4 h-4 md:w-5 md:h-5" />
-                      প্রশিক্ষণ মাইলফলক
-                    </h3>
-                    <ul className="space-y-2 md:space-y-3">
-                      {[
-                        "ভিডিও ১: নির্বাচনী আইন ও বিধিবিধান",
-                        "ভিডিও ২: ভোট গ্রহণ ও গণনা প্রক্রিয়া",
-                        "চূড়ান্ত মূল্যায়ন ও স্বীকৃতি"
-                      ].map((milestone, i) => (
-                        <li key={i} className="flex items-center gap-3 text-[13px] md:text-sm text-emerald-800">
-                          <div className="h-1.5 w-1.5 md:h-2 md:w-2 rounded-full bg-emerald-500 flex-shrink-0" />
-                          {milestone}
-                        </li>
-                      ))}
-                    </ul>
                   </div>
                 </div>
               </div>
 
               {/* Next Steps */}
               <div className="space-y-4 pt-4 md:pt-6 border-t border-slate-100">
-                <h3 className="font-bold text-lg md:text-xl text-slate-800 text-center md:text-left">পরবর্তী পদক্ষেপ</h3>
+                <h3 className="font-bold text-lg md:text-xl text-slate-800 text-center md:text-left">মনে রাখা ভালো</h3>
                 <div className="grid sm:grid-cols-2 gap-3 md:gap-4">
                   {[
-                    "আপনার এজেন্ট কার্ডটি প্রিন্ট করে সাথে রাখুন",
+                    "যেকোনো ভিডিও পুনরায় দেখতে হলে, ড্যাশবোর্ডে ফিরে যান",
                     "নির্ধারিত সেন্টারে সময়মতো উপস্থিত থাকুন",
                     "ভোটের দিন পরিচয়পত্র সাথে রাখুন",
                     "অনিয়ম দেখলে দ্রুত রিপোর্ট করুন"
@@ -355,18 +325,21 @@ export default function CongratulationsPage() {
 
               {/* Bottom Actions */}
               <div className="flex flex-col sm:flex-row gap-3 md:gap-4 pt-4 md:pt-6">
-                <Link href="/dashboard" className="flex-1">
-                  <Button variant="ghost" size="lg" className="w-full text-slate-600 hover:bg-slate-100 h-12 rounded-xl font-bold">
+                <Link href="/dashboard" className="flex-1 min-w-0">
+                  <Button size="lg" className="w-full bg-bangladesh-green hover:bg-bangladesh-green/90 text-white h-12 rounded-xl font-bold shadow-lg shadow-bangladesh-green/20">
                     <Home className="mr-2 h-5 w-5" />
-                    ড্যাশবোর্ডে ফিরে যান
+                    ড্যাশবোর্ড
                   </Button>
                 </Link>
-                <Link href="/" className="flex-1">
-                  <Button variant="ghost" size="lg" className="w-full text-slate-600 hover:bg-slate-100 h-12 rounded-xl font-bold">
-                    প্রস্থান করুন
-                    <ArrowRight className="ml-2 h-5 w-5" />
-                  </Button>
-                </Link>
+                <Button 
+                  size="lg" 
+                  onClick={shareOnWhatsApp}
+                  variant="outline"
+                  className="flex-1 w-full min-w-0 bg-white hover:bg-slate-50 text-slate-700 border-slate-200 h-12 rounded-xl font-bold shadow-sm hover:shadow-md"
+                >
+                  <Share2 className="mr-2 h-5 w-5" />
+                  শেয়ার করুন
+                </Button>
               </div>
             </div>
           </CardContent>

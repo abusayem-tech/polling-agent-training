@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
-import { CheckCircle2, Video, Download, PlayCircle, LogOut, LayoutDashboard, Clock } from "lucide-react";
+import { CheckCircle2, Video, Download, PlayCircle, LayoutDashboard, Clock, LogOut } from "lucide-react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
@@ -51,16 +51,16 @@ export default function DashboardPage() {
     setIsReady(true);
   }, [router]);
 
-  const handleLogout = () => {
-    localStorage.clear();
-    router.push("/");
-  };
-
   const progressValue = Math.round(
     ((v1Completed ? 1 : 0) + (v2Completed ? 1 : 0) + (v3Completed ? 1 : 0) + 
      (v4Completed ? 1 : 0) + (v5Completed ? 1 : 0) + (v6Completed ? 1 : 0) + 
      (v7Completed ? 1 : 0)) * 100 / 7
   );
+
+  const handleLogout = () => {
+    localStorage.clear();
+    router.push("/");
+  };
 
   if (!isReady || !userMobile) return null;
 
@@ -82,7 +82,7 @@ export default function DashboardPage() {
             <h1 className="text-xl font-bold text-slate-800 hidden md:block">প্রশিক্ষণ ড্যাশবোর্ড</h1>
           </div>
           
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-2 sm:gap-3 md:gap-4">
             <div className="text-right hidden sm:block">
               <p className="text-sm font-bold text-slate-800">{userName || "প্রশিক্ষণার্থী"}</p>
               <p className="text-xs text-slate-500">{userMobile}</p>
@@ -90,10 +90,10 @@ export default function DashboardPage() {
             <Button 
               variant="ghost" 
               size="icon"
-              className="text-slate-500 hover:text-bangladesh-red hover:bg-bangladesh-red/5"
+              className="text-slate-500 hover:text-bangladesh-red hover:bg-bangladesh-red/5 flex-shrink-0"
               onClick={handleLogout}
             >
-              <LogOut className="w-5 h-5" />
+              <LogOut className="w-4 h-4 sm:w-5 sm:h-5" />
             </Button>
           </div>
         </div>
@@ -103,16 +103,16 @@ export default function DashboardPage() {
         <div className="max-w-6xl mx-auto space-y-10">
           
           {/* Course Title */}
-          <div className="bg-white rounded-2xl shadow-lg border border-slate-100 p-6 text-center">
-            <h2 className="text-lg md:text-xl font-bold text-slate-800">
+          <div className="bg-white rounded-xl sm:rounded-2xl shadow-lg border border-slate-100 p-4 sm:p-6 text-center">
+            <h2 className="text-sm sm:text-base md:text-lg lg:text-xl font-bold text-slate-800 leading-tight px-2">
               কোর্স নাম: ত্রয়োদশ জাতীয় সংসদ নির্বাচন উপলক্ষ্যে নির্বাচনী ও পোলিং এজেন্টদের প্রশিক্ষণ কর্মশালা
             </h2>
           </div>
           
           {/* Progress Section */}
-          <div className="bg-white rounded-3xl shadow-xl shadow-slate-200/50 border border-slate-100 overflow-hidden">
-            <div className="p-6 md:p-10 flex flex-col md:flex-row gap-6 md:gap-8 items-center text-center md:text-left">
-              <div className="relative w-24 h-24 md:w-40 md:h-40 flex-shrink-0">
+          <div className="bg-white rounded-2xl sm:rounded-3xl shadow-xl shadow-slate-200/50 border border-slate-100 overflow-hidden">
+            <div className="p-4 sm:p-6 md:p-10 flex flex-col md:flex-row gap-4 sm:gap-6 md:gap-8 items-center text-center md:text-left">
+              <div className="relative w-20 h-20 sm:w-24 sm:h-24 md:w-40 md:h-40 flex-shrink-0">
                 <svg className="w-full h-full -rotate-90 transform" viewBox="0 0 100 100">
                   <circle className="text-slate-100" strokeWidth="8" stroke="currentColor" fill="transparent" r="40" cx="50" cy="50" />
                   <circle className="text-bangladesh-green transition-all duration-1000 ease-in-out" strokeWidth="8" strokeDasharray={251.2} strokeDashoffset={251.2 - (251.2 * progressValue) / 100} strokeLinecap="round" stroke="currentColor" fill="transparent" r="40" cx="50" cy="50" />
@@ -123,12 +123,12 @@ export default function DashboardPage() {
                 </div>
               </div>
 
-              <div className="flex-1 flex flex-col md:flex-row justify-between items-center gap-4 md:gap-6 w-full">
-                <div className="space-y-2">
-                  <h2 className="text-xl md:text-3xl font-bold text-slate-800 leading-tight">
+              <div className="flex-1 flex flex-col md:flex-row justify-between items-center gap-3 sm:gap-4 md:gap-6 w-full">
+                <div className="space-y-1 sm:space-y-2">
+                  <h2 className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold text-slate-800 leading-tight">
                     {progressValue === 100 ? "অভিনন্দন! আপনার প্রশিক্ষণ শেষ।" : "আপনার প্রশিক্ষণ চালিয়ে যান"}
                   </h2>
-                  <p className="text-slate-500 text-base md:text-lg">
+                  <p className="text-slate-500 text-sm sm:text-base md:text-lg">
                     {progressValue === 100 
                       ? "আপনার সার্টিফিকেটটি এখন সংগ্রহের জন্য প্রস্তুত।" 
                       : "সার্টিফিকেট পেতে সকল ভিডিও সম্পূর্ণ দেখা প্রয়োজন।"}
@@ -161,7 +161,7 @@ export default function DashboardPage() {
           </div>
 
           {/* Videos Grid */}
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 md:gap-8">
             {[
               {
                 id: 1,
@@ -239,38 +239,38 @@ export default function DashboardPage() {
                       className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                     />
                   ) : (
-                    <div className="absolute inset-0 flex flex-col items-center justify-center text-white/40 bg-slate-900 px-4 text-center">
-                      <Clock className="w-10 h-10 md:w-12 md:h-12 mb-2" />
-                      <p className="font-bold text-sm md:text-base">আগের ভিডিওটি আগে দেখা প্রয়োজন</p>
+                    <div className="absolute inset-0 flex flex-col items-center justify-center text-white/40 bg-slate-900 px-3 sm:px-4 text-center">
+                      <Clock className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 mb-1 sm:mb-2" />
+                      <p className="font-bold text-xs sm:text-sm md:text-base leading-tight">আগের ভিডিওটি আগে দেখা প্রয়োজন</p>
                     </div>
                   )}
                   
                   {v.completed && (
-                    <div className="absolute top-3 right-3 md:top-4 md:right-4 bg-emerald-500 text-white px-2.5 py-1 rounded-full text-[10px] md:text-xs font-black flex items-center gap-1.5 shadow-xl z-10">
-                      <CheckCircle2 className="w-3 md:w-3.5 h-3 md:h-3.5" />
-                      সম্পন্ন
+                    <div className="absolute top-2 right-2 sm:top-3 sm:right-3 md:top-4 md:right-4 bg-emerald-500 text-white px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-full text-[9px] sm:text-[10px] md:text-xs font-black flex items-center gap-1 sm:gap-1.5 shadow-xl z-10">
+                      <CheckCircle2 className="w-2.5 h-2.5 sm:w-3 sm:h-3 md:w-3.5 md:h-3.5" />
+                      <span className="hidden xs:inline">সম্পন্ন</span>
                     </div>
                   )}
 
                   {v.unlocked && (
                     <Link href={v.href} className="absolute inset-0 flex items-center justify-center bg-black/40 group-hover:bg-black/20 transition-colors">
-                      <div className="w-14 h-14 md:w-16 md:h-16 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center group-hover:scale-110 transition-transform border border-white/30 shadow-2xl">
-                        <PlayCircle className="w-8 h-8 md:w-10 md:h-10 text-white" />
+                      <div className="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center group-hover:scale-110 transition-transform border border-white/30 shadow-2xl">
+                        <PlayCircle className="w-7 h-7 sm:w-8 sm:h-8 md:w-10 md:h-10 text-white" />
                       </div>
                     </Link>
                   )}
                 </div>
 
-                <div className="p-5 md:p-6 space-y-3 md:space-y-4">
-                  <div className="flex justify-between items-start gap-3 md:gap-4">
-                    <div className="space-y-1">
-                      <h3 className="text-lg md:text-xl font-bold text-slate-800 leading-tight">{v.title}</h3>
-                      <p className="text-slate-500 text-xs md:text-sm line-clamp-2">{v.desc}</p>
+                <div className="p-4 sm:p-5 md:p-6 space-y-2 sm:space-y-3 md:space-y-4">
+                  <div className="flex justify-between items-start gap-2 sm:gap-3 md:gap-4">
+                    <div className="space-y-1 flex-1 min-w-0">
+                      <h3 className="text-base sm:text-lg md:text-xl font-bold text-slate-800 leading-tight line-clamp-2">{v.title}</h3>
+                      <p className="text-slate-500 text-xs sm:text-sm line-clamp-2">{v.desc}</p>
                     </div>
                     {v.unlocked && (
-                      <Link href={v.href}>
+                      <Link href={v.href} className="flex-shrink-0">
                         <Button variant="outline" size="sm" className={cn(
-                          "rounded-xl px-4 py-1.5 h-auto text-xs font-bold",
+                          "rounded-lg sm:rounded-xl px-3 sm:px-4 py-1.5 h-auto text-[10px] sm:text-xs font-bold whitespace-nowrap",
                           v.completed 
                             ? "border-slate-200 text-slate-600 hover:bg-slate-50" 
                             : "border-emerald-200 text-emerald-600 hover:bg-emerald-50"
