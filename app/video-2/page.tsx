@@ -222,7 +222,7 @@ export default function Video2Page() {
                 <div className="p-4 rounded-xl bg-amber-50 border border-amber-100 flex items-start gap-3">
                   <Award className="w-5 h-5 text-amber-600 flex-shrink-0 mt-0.5" />
                   <p className="text-xs text-amber-800 leading-relaxed font-medium">
-                    এই মডিউলটি শেষ করলে আপনার সার্টিফিকেট অটোমেটিক্যালি জেনারেট হয়ে যাবে।
+                    এই মডিউলটি শেষ করলে আপনার সার্টিফিকেট স্বয়ংক্রিয়ভাবে প্রস্তুত হবে।
                   </p>
                 </div>
               </div>
