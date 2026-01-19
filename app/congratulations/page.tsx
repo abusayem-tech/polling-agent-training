@@ -8,7 +8,6 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useToast } from "@/hooks/use-toast";
 import confetti from "canvas-confetti";
-import Image from "next/image";
 
 export default function CongratulationsPage() {
   const [userMobile, setUserMobile] = useState<string | null>(null);
@@ -132,7 +131,7 @@ export default function CongratulationsPage() {
       const ctx = canvas.getContext('2d');
       if (!ctx) return;
 
-      const img = new Image();
+      const img = new window.Image();
       img.crossOrigin = "anonymous";
       img.src = "/certificate.png";
 
